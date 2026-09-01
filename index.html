@@ -232,9 +232,8 @@ section{ padding: 64px 28px; position:relative; }
 
 /* Save the Date (비둘기+메달리온+부케 통합 이미지) */
 .medallion-wrap{
-  width: 100%;
-  max-width: 400px;
-  margin: 10px auto 0;
+  width: 114%;
+  margin: 10px 0 0 -7%;
   filter: drop-shadow(0 12px 20px rgba(74,25,31,0.2));
 }
 .medallion-wrap img{ width:100%; display:block; }
@@ -386,7 +385,6 @@ section{ padding: 64px 28px; position:relative; }
 .toast-scene{
   position:relative;
   margin-top: -20px;
-  padding: 0 6%;
 }
 .toast-couple-slot{
   width: 62%;
@@ -395,16 +393,16 @@ section{ padding: 64px 28px; position:relative; }
 }
 .flowers-left-slot{
   position:absolute;
-  left: -2%;
+  left: 0;
   bottom: 6%;
   width: 34%;
   aspect-ratio: 1/1;
 }
 .table-pink-slot{
   position:absolute;
-  right: -2%;
-  bottom: -2%;
-  width: 34%;
+  right: 0;
+  bottom: 0;
+  width: 36%;
   aspect-ratio: 3/4;
 }
 
@@ -492,13 +490,7 @@ section{ padding: 64px 28px; position:relative; }
 .map-holder{
   margin-top: 26px;
   width:100%;
-  height: 190px;
-  background:
-    repeating-linear-gradient(0deg, rgba(60,46,39,0.06) 0 1px, transparent 1px 26px),
-    repeating-linear-gradient(90deg, rgba(60,46,39,0.06) 0 1px, transparent 1px 26px),
-    var(--cream-card);
-  border: 1px solid rgba(60,46,39,0.12);
-  border-radius: 4px;
+  background: var(--cream);
   display:flex; align-items:center; justify-content:center;
   color: var(--ink-soft);
   font-size: 11.5px;
@@ -643,6 +635,29 @@ section{ padding: 64px 28px; position:relative; }
   border:none; background:transparent;
   color:#F4EFE3; font-size:26px; line-height:1;
   cursor:pointer; z-index:2;
+}
+.lightbox__arrow{
+  position:absolute; top:50%; transform: translateY(-50%);
+  width: 42px; height:42px;
+  border-radius:50%;
+  border:none;
+  background: rgba(255,255,255,0.15);
+  color:#F4EFE3;
+  font-size: 17px;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  z-index:2;
+}
+.lightbox__arrow--prev{ left: 14px; }
+.lightbox__arrow--next{ right: 14px; }
+.lightbox__count{
+  position:absolute; bottom: 24px; left:0; right:0;
+  text-align:center;
+  color: rgba(244,239,227,0.75);
+  font-family: var(--font-en);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  z-index:2;
 }
 
 /* ============================================================
@@ -791,14 +806,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       신랑 <b>최원우</b><span class="sep">·</span>신부 <b>송혜림</b>
     </p>
 
-    <!-- 전화 연락 기능 (기존 기능 유지) -->
-    <!-- 🔧 tel: 뒤 번호를 실제 전화번호로 교체하세요. -->
-    <div class="couple-call">
-      <a class="couple-call__link" href="tel:01000000000">&#128222; 신랑 최원우</a>
-      <a class="couple-call__link" href="tel:01000000000">&#128222; 신부 송혜림</a>
-    </div>
-    <button class="host-call-link" id="hostCallOpen">혼주에게 연락하기</button>
-
     <div class="candelabra-slot illust-slot">
       <img class="illust" src="candelabra.png" alt="촛대 일러스트"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -821,6 +828,14 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
         <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6); font-size:9px;">table-pink.png</div>
       </div>
     </div>
+
+    <!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
+    <!-- 🔧 tel: 뒤 번호를 실제 전화번호로 교체하세요. -->
+    <div class="couple-call">
+      <a class="couple-call__link" href="tel:01000000000">&#128222; 신랑 최원우</a>
+      <a class="couple-call__link" href="tel:01000000000">&#128222; 신부 송혜림</a>
+    </div>
+    <button class="host-call-link" id="hostCallOpen">혼주에게 연락하기</button>
 
     <div class="wine-bottom-fade"></div>
   </section>
@@ -969,10 +984,10 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <p class="location__tel">문의전화 02-543-2555</p>
     <button class="location__copy" id="addrCopyBtn">&#128203; 주소 복사</button>
 
-    <!-- 손그림 약도 이미지 -->
-    <div class="map-holder illust-slot" id="mapHolder" style="padding:0; overflow:hidden; height:auto; aspect-ratio:1696/1594; background:#fff;">
-      <img class="illust" src="directions-map.jpg" alt="약도"
-           style="object-fit:contain; width:100%; height:100%; background:#fff;"
+    <!-- 손그림 약도 이미지 : 페이지 배경과 자연스럽게 이어지도록 테두리/배경 없이 원본 비율 그대로 표시 -->
+    <div class="map-holder illust-slot" id="mapHolder" style="padding:0; overflow:hidden; height:auto; border:none; background:transparent; box-shadow:none;">
+      <img src="directions-map.jpg" alt="약도"
+           style="display:block; width:100%; height:auto;"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
     </div>
@@ -1024,7 +1039,10 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
   <!-- 갤러리 확대 라이트박스 -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox__close" id="lightboxClose" aria-label="닫기">&times;</button>
+    <button class="lightbox__arrow lightbox__arrow--prev" id="lightboxPrev" aria-label="이전 사진">&#10094;</button>
+    <button class="lightbox__arrow lightbox__arrow--next" id="lightboxNext" aria-label="다음 사진">&#10095;</button>
     <div class="lightbox__track" id="lightboxTrack"></div>
+    <p class="lightbox__count" id="lightboxCount">1 / 10</p>
   </div>
 
   <!-- ============================================================
@@ -1226,6 +1244,9 @@ updateGalleryPosition(false);
 const lightbox = document.getElementById('lightbox');
 const lightboxTrack = document.getElementById('lightboxTrack');
 const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+const lightboxCount = document.getElementById('lightboxCount');
 
 // 라이트박스용 슬라이드를 갤러리와 동일한 순서로 미리 생성
 for(let i = 1; i <= GALLERY_COUNT; i++){
@@ -1236,16 +1257,34 @@ for(let i = 1; i <= GALLERY_COUNT; i++){
   lightboxTrack.appendChild(slide);
 }
 
+let lightboxIndex = 0;
+
 function openLightbox(index){
+  lightboxIndex = index;
   lightboxTrack.style.transition = 'none';
-  lightboxTrack.style.transform = `translateX(${-index * 100}%)`;
+  lightboxTrack.style.transform = `translateX(${-lightboxIndex * 100}%)`;
+  lightboxCount.textContent = `${lightboxIndex + 1} / ${GALLERY_COUNT}`;
   lightbox.classList.add('is-open');
   document.body.style.overflow = 'hidden';
 }
 function closeLightbox(){
   lightbox.classList.remove('is-open');
   document.body.style.overflow = '';
+  // 라이트박스에서 넘긴 사진 위치를 뒤의 갤러리 캐러셀에도 반영
+  galleryIndex = lightboxIndex;
+  updateGalleryPosition(false);
 }
+function updateLightboxPosition(animate = true){
+  lightboxTrack.style.transition = animate ? 'transform .3s ease' : 'none';
+  lightboxTrack.style.transform = `translateX(${-lightboxIndex * 100}%)`;
+  lightboxCount.textContent = `${lightboxIndex + 1} / ${GALLERY_COUNT}`;
+}
+function goLightbox(delta){
+  lightboxIndex = Math.min(Math.max(lightboxIndex + delta, 0), GALLERY_COUNT - 1);
+  updateLightboxPosition(true);
+}
+lightboxPrev.addEventListener('click', () => goLightbox(-1));
+lightboxNext.addEventListener('click', () => goLightbox(1));
 
 // 갤러리 슬라이드를 탭하면(스와이프가 아닌 탭일 때만) 라이트박스를 엽니다.
 let gTapStartX = 0, gTapStartY = 0;
@@ -1268,6 +1307,31 @@ lightbox.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if(!lightbox.classList.contains('is-open')) return;
   if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowRight') goLightbox(1);
+  if(e.key === 'ArrowLeft') goLightbox(-1);
+});
+
+// 라이트박스 안에서 좌우 스와이프로 사진 넘기기
+let lbTouchStartX = 0, lbTouchDeltaX = 0, lbIsTouching = false;
+lightboxTrack.addEventListener('touchstart', (e) => {
+  lbIsTouching = true;
+  lbTouchStartX = e.touches[0].clientX;
+  lightboxTrack.style.transition = 'none';
+}, { passive:true });
+lightboxTrack.addEventListener('touchmove', (e) => {
+  if(!lbIsTouching) return;
+  lbTouchDeltaX = e.touches[0].clientX - lbTouchStartX;
+  const baseOffset = -lightboxIndex * 100;
+  const dragPercent = (lbTouchDeltaX / lightboxTrack.clientWidth) * 100;
+  lightboxTrack.style.transform = `translateX(${baseOffset + dragPercent}%)`;
+}, { passive:true });
+lightboxTrack.addEventListener('touchend', () => {
+  lbIsTouching = false;
+  const threshold = lightboxTrack.clientWidth * 0.15;
+  if(lbTouchDeltaX > threshold) goLightbox(-1);
+  else if(lbTouchDeltaX < -threshold) goLightbox(1);
+  else updateLightboxPosition(true);
+  lbTouchDeltaX = 0;
 });
 
 /* ============================================================
