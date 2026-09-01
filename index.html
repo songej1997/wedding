@@ -167,6 +167,11 @@ section{ padding: 64px 28px; position:relative; }
 .cover__intro{
   padding: 26px 28px 0;
   text-align:center;
+  /* 커튼 아치 안쪽으로 끌어올림: 커튼 이미지 비율(928:1137) 기준
+     발란스(위쪽 늘어진 천) 아래부터 시작하도록 음수 margin 사용 */
+  margin-top: -98%;
+  position: relative;
+  z-index: 2;
 }
 .cover__eyebrow{
   color: var(--wine);
@@ -179,12 +184,12 @@ section{ padding: 64px 28px; position:relative; }
   color: var(--ink-soft);
 }
 
-/* 정원 예식 장면 일러스트 (컷아웃 카드) */
+/* 정원 예식 장면 일러스트 (컷아웃 카드) : 커튼 아치 폭 안에 들어가도록 축소 */
 .ceremony-slot{
-  width: 92%;
-  max-width: 360px;
+  width: 70%;
+  max-width: 280px;
   aspect-ratio: 3/2;
-  margin: 26px auto 0;
+  margin: 18px auto 0;
   background: var(--cream);
   filter: drop-shadow(0 10px 18px rgba(74,25,31,0.18));
 }
@@ -227,9 +232,9 @@ section{ padding: 64px 28px; position:relative; }
 
 /* Save the Date (비둘기+메달리온+부케 통합 이미지) */
 .medallion-wrap{
-  width: 92%;
-  max-width: 360px;
-  margin: -6px auto 0;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto 0;
   filter: drop-shadow(0 12px 20px rgba(74,25,31,0.2));
 }
 .medallion-wrap img{ width:100%; display:block; }
@@ -404,120 +409,9 @@ section{ padding: 64px 28px; position:relative; }
 }
 
 .wine-bottom-fade{
-  height: 40px;
-  background: linear-gradient(180deg, var(--wine-deep), var(--wine));
-}
-
-/* ============================================================
-   3. RSVP 섹션 (솔리드 버건디)
-============================================================= */
-.rsvp{
-  background: var(--wine);
-  color: var(--on-wine);
-  text-align:center;
-  padding-top: 0;
-}
-
-.rsvp__top-illust{
-  position:relative;
-  height: 150px;
-  margin-bottom: 20px;
-}
-.dress-tux-slot{
-  width: 46%;
-  height: 100%;
-  margin: 0 auto;
-}
-.table-pink-slot--rsvp{
-  position:absolute;
-  right: 0%;
-  bottom: -10%;
-  width: 40%;
-  aspect-ratio: 3/4;
-}
-.flowers-left-slot--rsvp{
-  position:absolute;
-  left: -2%;
-  bottom: -14%;
-  width: 30%;
-  aspect-ratio: 1/1;
-}
-
-.rsvp .eyebrow-en{ color: var(--on-wine-soft); margin-bottom: 14px; }
-.rsvp .script-headline{ color: var(--on-wine); font-size: 40px; margin-bottom: 20px; }
-.rsvp .body-text{ color: var(--on-wine-soft); margin-bottom: 30px; }
-
-.rsvp__btn{
-  display:inline-block;
-  background: var(--cream-card);
-  color: var(--wine);
-  border:none;
-  border-radius: 2px;
-  padding: 15px 40px;
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  cursor:pointer;
-}
-
-.wine-fade-to-cream{
   height: 60px;
-  background: linear-gradient(180deg, var(--wine), var(--cream));
+  background: linear-gradient(180deg, var(--wine-deep), var(--cream));
 }
-
-/* RSVP 응답 모달 */
-.rsvp-modal{ position:fixed; inset:0; z-index:1000; display:none; }
-.rsvp-modal.is-open{ display:block; }
-.rsvp-modal__backdrop{
-  position:absolute; inset:0;
-  background: rgba(30,14,14,0.5);
-  opacity:0; transition: opacity .25s ease;
-}
-.rsvp-modal.is-open .rsvp-modal__backdrop{ opacity:1; }
-.rsvp-modal__panel{
-  position:absolute; left:50%; top:50%;
-  transform: translate(-50%,-46%);
-  width: 86%;
-  max-width: 380px;
-  background: var(--cream-card);
-  border-radius: 10px;
-  padding: 30px 26px;
-  opacity:0;
-  transition: opacity .25s ease, transform .25s ease;
-}
-.rsvp-modal.is-open .rsvp-modal__panel{ opacity:1; transform: translate(-50%,-50%); }
-.rsvp-modal__title{
-  font-family: var(--font-serif);
-  font-size: 17px;
-  color: var(--wine);
-  text-align:center;
-  margin-bottom: 22px;
-}
-.rsvp-field{ margin-bottom: 16px; }
-.rsvp-field label{ display:block; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; }
-.rsvp-field input, .rsvp-field select, .rsvp-field textarea{
-  width:100%;
-  border: 1px solid rgba(60,46,39,0.2);
-  border-radius: 4px;
-  padding: 10px 12px;
-  font-size: 13.5px;
-  font-family: var(--font-kr);
-  background: #fff;
-  color: var(--ink);
-}
-.rsvp-field textarea{ resize:none; min-height: 64px; }
-.rsvp-modal__actions{
-  display:flex; gap:10px; margin-top: 20px;
-}
-.rsvp-modal__actions button{
-  flex:1;
-  padding: 12px 0;
-  border-radius: 4px;
-  font-size: 13px;
-  cursor:pointer;
-  border:none;
-}
-.rsvp-modal__cancel{ background: transparent; border: 1px solid rgba(60,46,39,0.25) !important; color: var(--ink-soft); }
-.rsvp-modal__submit{ background: var(--wine); color: var(--on-wine); }
 
 /* ============================================================
    4. 마음 전하실 곳
@@ -717,6 +611,40 @@ section{ padding: 64px 28px; position:relative; }
   color: var(--ink-soft);
 }
 
+.gallery__slide{ cursor: zoom-in; }
+
+/* 갤러리 확대 라이트박스 */
+.lightbox{
+  position:fixed; inset:0;
+  background: rgba(20,14,14,0.95);
+  z-index: 1400;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.lightbox.is-open{ display:flex; }
+.lightbox__track{
+  display:flex;
+  width:100%; height:100%;
+  transition: transform .3s ease;
+}
+.lightbox__slide{
+  min-width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  padding: 0 16px;
+}
+.lightbox__slide img{
+  max-width:100%; max-height:100%;
+  object-fit:contain;
+}
+.lightbox__close{
+  position:absolute; top:20px; right:20px;
+  width:38px; height:38px;
+  border:none; background:transparent;
+  color:#F4EFE3; font-size:26px; line-height:1;
+  cursor:pointer; z-index:2;
+}
+
 /* ============================================================
    8. 클로징
 ============================================================= */
@@ -753,6 +681,7 @@ section{ padding: 64px 28px; position:relative; }
 
 .footer{ text-align:center; padding: 32px 28px 50px; }
 .footer__copyright{ font-size: 10px; color: var(--ink-soft); }
+.footer__credit{ margin-top: 6px; font-size: 9.5px; letter-spacing: 0.06em; color: var(--ink-soft); opacity:0.7; }
 
 /* ============================================================
    배경음악 토글 + 토스트 (기존 기능 유지)
@@ -946,70 +875,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
   </div>
 
   <!-- ============================================================
-       3. RSVP
-       🔧 필요한 일러스트: dress-tux.png / table-pink.png(재사용) / flowers-left.png(재사용)
-       🔧 참석 여부 제출은 백엔드가 없어 '메일 전송' 방식으로 구현했습니다.
-          RSVP_EMAIL 상수를 실제 이메일로 바꾸면, 제출 시 그 주소로
-          메일 앱이 열리며 내용이 자동으로 채워집니다.
-  ============================================================= -->
-  <section class="rsvp reveal">
-    <div class="rsvp__top-illust">
-      <div class="dress-tux-slot illust-slot">
-        <!-- <img class="illust" src="dress-tux.png" alt="드레스 턱시도 일러스트"> -->
-        <div class="illust-placeholder" style="border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">dress-tux.png</div>
-      </div>
-      <div class="table-pink-slot--rsvp illust-slot">
-        <img class="illust" src="table-pink.png" alt=""
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6); font-size:9px;">table-pink.png</div>
-      </div>
-      <div class="flowers-left-slot--rsvp illust-slot">
-        <img class="illust" src="flowers.png" alt=""
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6); font-size:9px;">flowers.png</div>
-      </div>
-    </div>
-
-    <p class="eyebrow-en">RSVP</p>
-    <p class="script-headline">Will you join us?</p>
-    <p class="body-text">참석 여부를 미리 알려주시면<br>더욱 정성껏 준비하겠습니다.</p>
-
-    <button class="rsvp__btn" id="rsvpOpen">참 석 의 사 전 달 하 기</button>
-  </section>
-  <div class="wine-fade-to-cream"></div>
-
-  <!-- RSVP 응답 모달 -->
-  <div class="rsvp-modal" id="rsvpModal">
-    <div class="rsvp-modal__backdrop" id="rsvpModalBackdrop"></div>
-    <div class="rsvp-modal__panel">
-      <p class="rsvp-modal__title">참석 의사 전달하기</p>
-      <div class="rsvp-field">
-        <label>성함</label>
-        <input type="text" id="rsvpName" placeholder="홍길동">
-      </div>
-      <div class="rsvp-field">
-        <label>참석 여부</label>
-        <select id="rsvpAttend">
-          <option value="참석">참석합니다</option>
-          <option value="불참">참석이 어렵습니다</option>
-        </select>
-      </div>
-      <div class="rsvp-field">
-        <label>참석 인원 (본인 포함)</label>
-        <input type="number" id="rsvpCount" min="1" value="1">
-      </div>
-      <div class="rsvp-field">
-        <label>전달하고 싶은 말 (선택)</label>
-        <textarea id="rsvpMessage" placeholder="축하 메시지를 남겨주세요"></textarea>
-      </div>
-      <div class="rsvp-modal__actions">
-        <button class="rsvp-modal__cancel" id="rsvpCancel">취소</button>
-        <button class="rsvp-modal__submit" id="rsvpSubmit">보내기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================
        4. 마음 전하실 곳
   ============================================================= -->
   <section class="accounts reveal">
@@ -1156,6 +1021,12 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <p class="gallery__count" id="galleryCount">1 / 10</p>
   </section>
 
+  <!-- 갤러리 확대 라이트박스 -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose" aria-label="닫기">&times;</button>
+    <div class="lightbox__track" id="lightboxTrack"></div>
+  </div>
+
   <!-- ============================================================
        8. 클로징
        🔧 필요한 일러스트: globe-plane.png (비행기+지구본 커플 일러스트)
@@ -1188,6 +1059,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 
   <footer class="footer">
     <p class="footer__copyright">Copyright ⓒ 2026. All rights reserved.</p>
+    <p class="footer__credit">made by eunzynx</p>
   </footer>
 
 </div>
@@ -1348,6 +1220,57 @@ galleryTrack.addEventListener('touchend', () => {
 updateGalleryPosition(false);
 
 /* ============================================================
+   갤러리 사진 확대 (라이트박스)
+   갤러리 사진을 탭하면 현재 사진이 전체화면으로 확대됩니다.
+============================================================= */
+const lightbox = document.getElementById('lightbox');
+const lightboxTrack = document.getElementById('lightboxTrack');
+const lightboxClose = document.getElementById('lightboxClose');
+
+// 라이트박스용 슬라이드를 갤러리와 동일한 순서로 미리 생성
+for(let i = 1; i <= GALLERY_COUNT; i++){
+  const fileName = `gallery${i}.jpg`;
+  const slide = document.createElement('div');
+  slide.className = 'lightbox__slide';
+  slide.innerHTML = `<img src="${fileName}" alt="갤러리 사진 ${i} 확대">`;
+  lightboxTrack.appendChild(slide);
+}
+
+function openLightbox(index){
+  lightboxTrack.style.transition = 'none';
+  lightboxTrack.style.transform = `translateX(${-index * 100}%)`;
+  lightbox.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
+// 갤러리 슬라이드를 탭하면(스와이프가 아닌 탭일 때만) 라이트박스를 엽니다.
+let gTapStartX = 0, gTapStartY = 0;
+galleryTrack.addEventListener('touchstart', (e) => {
+  gTapStartX = e.touches[0].clientX;
+  gTapStartY = e.touches[0].clientY;
+}, { passive:true });
+galleryTrack.addEventListener('touchend', (e) => {
+  const dx = Math.abs((e.changedTouches[0]?.clientX ?? gTapStartX) - gTapStartX);
+  const dy = Math.abs((e.changedTouches[0]?.clientY ?? gTapStartY) - gTapStartY);
+  if(dx < 8 && dy < 8) openLightbox(galleryIndex);
+});
+// 데스크톱(마우스) 클릭 대응
+galleryTrack.addEventListener('click', () => openLightbox(galleryIndex));
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+  if(e.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if(!lightbox.classList.contains('is-open')) return;
+  if(e.key === 'Escape') closeLightbox();
+});
+
+/* ============================================================
    줄 단위 스크롤 리빌
 ============================================================= */
 const LINE_SELECTOR = 'p, .script-headline';
@@ -1378,35 +1301,6 @@ function closeHostSheet(){ hostSheet.classList.remove('is-open'); document.body.
 document.getElementById('hostCallOpen').addEventListener('click', openHostSheet);
 document.getElementById('hostSheetClose').addEventListener('click', closeHostSheet);
 document.getElementById('hostSheetBackdrop').addEventListener('click', closeHostSheet);
-
-/* ============================================================
-   RSVP 모달 : 백엔드가 없어 mailto: 메일 전송으로 대체
-   🔧 RSVP_EMAIL 을 실제 이메일 주소로 교체하세요.
-============================================================= */
-const RSVP_EMAIL = 'example@email.com';
-const rsvpModal = document.getElementById('rsvpModal');
-document.getElementById('rsvpOpen').addEventListener('click', () => rsvpModal.classList.add('is-open'));
-document.getElementById('rsvpCancel').addEventListener('click', () => rsvpModal.classList.remove('is-open'));
-document.getElementById('rsvpModalBackdrop').addEventListener('click', () => rsvpModal.classList.remove('is-open'));
-
-document.getElementById('rsvpSubmit').addEventListener('click', () => {
-  const name = document.getElementById('rsvpName').value.trim();
-  const attend = document.getElementById('rsvpAttend').value;
-  const count = document.getElementById('rsvpCount').value;
-  const message = document.getElementById('rsvpMessage').value.trim();
-
-  if(!name){
-    showToast('성함을 입력해주세요');
-    return;
-  }
-
-  const subject = encodeURIComponent(`[참석의사] ${name}님 - ${attend}`);
-  const body = encodeURIComponent(
-    `성함: ${name}\n참석 여부: ${attend}\n참석 인원: ${count}명\n전달 메시지: ${message || '(없음)'}`
-  );
-  window.location.href = `mailto:${RSVP_EMAIL}?subject=${subject}&body=${body}`;
-  rsvpModal.classList.remove('is-open');
-});
 
 /* ============================================================
    마음 전하실 곳 - 아코디언 + 복사
