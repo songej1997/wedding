@@ -53,7 +53,7 @@
 }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
-html{ background:#E4DFD2; }
+html{ background:#E4DFD2; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 
 body{
   font-family: var(--font-kr);
@@ -184,6 +184,7 @@ section{ padding: 64px 28px; position:relative; }
   z-index: 2;
 }
 .cover__eyebrow{
+  display:block; white-space:nowrap;
   color: var(--wine);
   margin-bottom: 6px;
 }
@@ -544,7 +545,7 @@ section{ padding: 64px 28px; position:relative; }
 }
 .info-card p{ font-size: 13px; color: var(--ink-soft); line-height:1.8; }
 .guide-card{ padding:22px 16px; }
-.guide__row{ display:grid; grid-template-columns:64px 1fr; gap:8px; padding:12px 0; align-items:start; }
+.guide__row{ font-size:14px; display:grid; grid-template-columns:4.7em 1fr; gap:.6em; padding:12px 0; align-items:start; }
 .guide__row + .guide__row{ border-top:1px solid rgba(60,46,39,.1); }
 .guide dt{ font-family:var(--font-serif); font-weight:700; font-size:14px; color:var(--ink); line-height:1.5; }
 .guide dd{ font-family:var(--font-serif); font-size:12.5px; word-break:keep-all; color:var(--ink); line-height:1.85; }
@@ -828,10 +829,10 @@ section{ padding: 64px 28px; position:relative; }
 .stage[data-state="unfold"] .letter-paper > *, .stage[data-state="open"] .letter-paper > *{ opacity:1; }
 
 .lt-name{ font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
-.lt-invited{ font-family:var(--font-script); font-size:52px; line-height:1; color:var(--wine); white-space:nowrap; }
+.lt-invited{ display:inline-block; font-family:var(--font-script); font-size:min(52px,14vw); line-height:1; color:var(--wine); white-space:nowrap; }
 .lt-heart{ width:15px; height:15px; color:var(--gold); margin-top:8px; }
 .lt-body{ margin-top:20px; font-family:var(--font-serif); font-size:14px; line-height:1.95; color:var(--ink); }
-.lt-body div{ white-space:nowrap; }
+.lt-body div{ white-space:normal; word-break:keep-all; text-wrap:balance; }
 .lt-body .gap{ height:14px; }
 .lt-sign{ margin-top:24px; font-family:var(--font-serif); font-size:13.5px; color:var(--ink); }
 .lt-sign b{ font-weight:700; }
@@ -874,6 +875,22 @@ section{ padding: 64px 28px; position:relative; }
 /* ============================================================
    토스트
 ============================================================= */
+.music-toggle{
+  position: fixed; top: 18px; right: 18px; z-index: 1300;
+  width: 40px; height:40px; border-radius: 50%;
+  border: 1px solid rgba(244,239,227,0.5);
+  background: rgba(74,25,31,0.75);
+  backdrop-filter: blur(4px);
+  color: var(--on-wine);
+  font-size: 16px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.music-toggle.is-playing .music-toggle__icon{ animation: music-spin 3.5s linear infinite; }
+@keyframes music-spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+@media (prefers-reduced-motion: reduce){ .music-toggle.is-playing .music-toggle__icon{ animation:none; } }
+
 .toast{
   position: fixed; left: 50%; bottom: 40px;
   transform: translate(-50%, 20px);
@@ -894,6 +911,12 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 </style>
 </head>
 <body>
+
+<!-- 배경음악 -->
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
+<button class="music-toggle" id="musicToggle" aria-label="배경음악 재생/정지">
+  <span class="music-toggle__icon" id="musicToggleIcon">&#127925;</span>
+</button>
 
 <div class="wrap">
 
@@ -1222,6 +1245,39 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 
 <script>
 /* ============================================================
+   배경음악 : 자동재생 시도 + 실패 시 첫 터치에서 재생 + 토글 버튼
+============================================================= */
+const bgm = document.getElementById('bgm');
+const musicToggle = document.getElementById('musicToggle');
+const musicToggleIcon = document.getElementById('musicToggleIcon');
+bgm.volume = 0.5;
+
+function setMusicButtonState(isPlaying){
+  musicToggle.classList.toggle('is-playing', isPlaying);
+  musicToggleIcon.textContent = isPlaying ? '\u{1F3B5}' : '\u{1F507}';
+}
+function tryAutoplay(){
+  const playPromise = bgm.play();
+  if(playPromise !== undefined){
+    playPromise.then(() => setMusicButtonState(true)).catch(() => {
+      setMusicButtonState(false);
+      const startOnFirstTouch = () => {
+        bgm.play().then(() => setMusicButtonState(true)).catch(() => {});
+        document.removeEventListener('touchstart', startOnFirstTouch);
+        document.removeEventListener('click', startOnFirstTouch);
+      };
+      document.addEventListener('touchstart', startOnFirstTouch, { once:true });
+      document.addEventListener('click', startOnFirstTouch, { once:true });
+    });
+  }
+}
+tryAutoplay();
+musicToggle.addEventListener('click', () => {
+  if(bgm.paused){ bgm.play().then(() => setMusicButtonState(true)).catch(() => {}); }
+  else{ bgm.pause(); setMusicButtonState(false); }
+});
+
+/* ============================================================
    전역 유틸
 ============================================================= */
 const toastEl = document.getElementById('toast');
@@ -1502,6 +1558,35 @@ document.getElementById('addrCopyBtn').addEventListener('click', async () => {
   const ok = await copyText(VENUE_ADDRESS);
   showToast(ok ? '주소가 복사되었습니다' : '복사에 실패했습니다');
 });
+
+/* ============================================================
+   큰 글씨 대응 : 폰의 '글자 크기'를 키워 둔 경우에도 줄이 잘리거나 겹치지 않게 자동 조정
+============================================================= */
+(function fitForBigText(){
+  const stage = document.getElementById('stage');
+  const paper = document.querySelector('.letter-paper');
+  function shrink(el, maxW){
+    if(!el) return;
+    el.style.fontSize = '';
+    let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+    while(el.scrollWidth > maxW + 0.5 && fs > 9 && n++ < 40){ fs *= 0.95; el.style.fontSize = fs + 'px'; }
+  }
+  function run(){
+    const eb = document.querySelector('.cover__eyebrow');
+    if(eb){ eb.style.display = 'inline-block'; shrink(eb, eb.parentElement.clientWidth * 0.66); }
+    if(paper && stage){
+      shrink(document.querySelector('.lt-invited'), paper.clientWidth - 28);
+      stage.style.removeProperty('--LH');                       // 글이 길어져 편지지가 모자라면 높이를 자동으로 늘림
+      paper.style.height = 'auto';
+      const need = Math.ceil(paper.offsetHeight);
+      paper.style.height = '';
+      if(need + 110 > 450) stage.style.setProperty("--LH", (need + 110) + "px");
+    }
+  }
+  run();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  window.addEventListener('resize', run);
+})();
 </script>
 
 </body>
