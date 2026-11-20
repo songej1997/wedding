@@ -375,14 +375,6 @@ section{ padding: 64px 28px; position:relative; }
   color: var(--ink); text-decoration:none; font-size: 15px;
 }
 
-/* 촛대 일러스트 */
-.candelabra-slot{
-  width: 120px;
-  height: 160px;
-  margin: 40px 0 0 auto;
-  margin-right: 4%;
-}
-
 /* 건배 커플 + 소품 일러스트 묶음 */
 .toast-scene{
   position:relative;
@@ -417,7 +409,7 @@ section{ padding: 64px 28px; position:relative; }
     rgba(244,239,227,.5) 55%, rgba(244,239,227,.8) 75%, rgba(244,239,227,.95) 90%, #F4EFE3 100%);
 }
 /* 스티커 느낌 일러스트: 버건디 위에서 자연스럽게 뜨도록 부드러운 그림자 */
-.candelabra-slot .illust, .flowers-left-slot .illust, .table-pink-slot .illust{
+.flowers-left-slot .illust, .table-pink-slot .illust{
   filter: drop-shadow(0 6px 10px rgba(12,2,5,.45));
 }
 .illust[hidden]{ display:none; }
@@ -851,15 +843,15 @@ section{ padding: 64px 28px; position:relative; }
 /* ============================================================
    하트 갤러리 (사진 19장) — 🔧 장수는 JS 의 GALLERY_COUNT 만 바꾸면 됩니다 (19장이 가장 예쁘게 맞아요)
 ============================================================= */
-.heart{ position:relative; width:min(380px,100%); margin:34px auto 0; aspect-ratio:100/77; }
+.heart{ position:relative; width:min(380px,100%); margin:34px auto 0; aspect-ratio:100/130; }
 .tile{
-  position:absolute; width:14.6%; aspect-ratio:1/1; padding:0; border:0; cursor:pointer;
-  background:#FEFCF6; box-shadow:0 5px 12px rgba(74,25,31,.26);
+  position:absolute; width:21%; aspect-ratio:4/5.2; padding:0; border:0; cursor:pointer;
+  background:#FEFCF6; box-shadow:0 2px 4px rgba(40,10,15,.22), 0 7px 14px rgba(40,10,15,.2);
   transform:translate(-50%,-50%) rotate(var(--r,0deg)) scale(.55); opacity:0;
   transition:transform .7s cubic-bezier(.34,1.42,.5,1), opacity .5s ease;
   transition-delay:calc(var(--i) * 55ms);
 }
-.tile .tile__in{ position:absolute; inset:3px; overflow:hidden; background:#E9DFC9; }
+.tile .tile__in{ position:absolute; inset:3px 3px 11px; overflow:hidden; background:#E9DFC9; }
 .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
 .tile.is-blank .tile__in::after{ content:"\2661"; position:absolute; inset:0; display:grid; place-items:center; color:rgba(110,36,48,.35); font-size:18px; }
 .heart.is-in .tile{ opacity:1; transform:translate(-50%,-50%) rotate(var(--r,0deg)) scale(1); }
@@ -1012,13 +1004,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     </div>
     <button type="button" class="env-hint" id="tapHint" aria-controls="letterCard">카드를 눌러보세요!</button>
 
-    <div class="candelabra-slot illust-slot">
-      <img class="illust" src="candelabra.png" alt="촛대 일러스트"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">candelabra.png</div>
-    </div>
-
-    <!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
+<!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
     <!-- 🔧 tel: 뒤 번호를 실제 전화번호로 교체하세요. -->
     <div class="couple-call">
       <a class="couple-call__link" href="tel:01097713386"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4-2 1.4a11 11 0 0 0 5.1 5.1l1.4-2 4 1.4v3c0 1-.8 1.8-1.8 1.8C10.8 18.2 5.8 13.2 4.8 5.3 4.8 4.3 5.6 3.5 6.6 3.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> 신랑 최원우</a>
@@ -1118,12 +1104,12 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
     </div>
 
-    <!-- 주차 / 지하철 / SRT / 부산 대절버스 안내 -->
+    <!-- 주차 / 지하철 / KTX / 부산 대절버스 안내 -->
     <div class="info-card guide-card">
       <dl class="guide">
         <div class="guide__row"><dt>주차</dt><dd>예식장 건너편 공영주차장<br>만차 시 가든파이브 주차장 이용 가능</dd></div>
         <div class="guide__row"><dt>지하철</dt><dd>수서역 4번 출구 직진 좌회전 후<br>맞은편 노란색 셔틀버스 탑승</dd></div>
-        <div class="guide__row"><dt>SRT</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스 탑승</dd></div>
+        <div class="guide__row"><dt>KTX</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스 탑승</dd></div>
         <div class="guide__row"><dt>부산<br>대절버스</dt><dd>동래역 3번 출구 오전 7시 30분 출발<br>차량번호 : 부산 70바 7141</dd></div>
       </dl>
       <p class="guide__note">* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
@@ -1359,9 +1345,8 @@ const photoName = (i) => `gallery${i}.jpg`;
 
 // 하트 배치: 줄마다 [가로 위치들] (단위: 사진 한 칸)
 const HEART_LAYOUTS = {
-  14: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-1,0,1], [0]],                      // 4+6+3+1
-  15: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-1.5,-0.5,0.5,1.5], [0]],           // 4+6+4+1
-  19: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-2,-1,0,1,2], [-1,0,1], [0]]        // 4+6+5+3+1
+  14: [[-2,-1,1,2], [-2,-1,0,1,2], [-1,0,1], [-0.5,0.5]],                           // 4+5+3+2
+  15: [[-2,-1,1,2], [-2,-1,0,1,2], [-1.5,-0.5,0.5,1.5], [-0.5,0.5]]                  // 4+5+4+2
 };
 const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[15];
 const heartEl = document.getElementById('heart');
@@ -1375,8 +1360,8 @@ let lightboxIndex = 0, lastTile = null;
 const tiles = [];
 
 (function buildHeart(){
-  const PITCH = 16.6, ROWH = 16.4, TILE = 14.6;      // 사진이 겹치지 않게: 간격(PITCH, ROWH) > 사진 크기(TILE)           // 가로 폭(%) 기준
-  const H = (HEART_ROWS.length - 1) * ROWH + TILE + 2;      // 하트 전체 높이(%)
+  const PITCH = 18.4, ROWH = 24, TILE_H = 27.3;       // 폴라로이드가 살짝만 겹치는 촘촘한 하트 (가로 폭 % 기준)
+  const H = (HEART_ROWS.length - 1) * ROWH + TILE_H + 2;      // 하트 전체 높이(%)
   heartEl.style.aspectRatio = `100 / ${H}`;
   let n = 0;
   HEART_ROWS.forEach((row, r) => {
@@ -1387,9 +1372,10 @@ const tiles = [];
       t.type = 'button'; t.className = 'tile';
       t.setAttribute('aria-label', `사진 ${i} 크게 보기`);
       t.style.left = (50 + x * PITCH) + '%';
-      t.style.top = ((r * ROWH + TILE/2 + 1) / H * 100) + '%';
+      t.style.top = ((r * ROWH + TILE_H/2 + 1) / H * 100) + '%';
+      t.style.zIndex = (n % 2) ? 2 : 1;
       t.style.setProperty('--i', n);
-      t.style.setProperty('--r', ((n * 37) % 5 - 2) + 'deg');   // 살짝씩 기울어진 느낌
+      t.style.setProperty('--r', ((n * 37) % 9 - 4) + 'deg');   // 살짝씩 기울어진 느낌
       const inner = document.createElement('span'); inner.className = 'tile__in';
       const img = new Image(); img.alt = `갤러리 사진 ${i}`; img.decoding = 'async'; img.loading = 'lazy';
       img.onerror = () => { t.classList.add('is-blank'); img.remove(); };
