@@ -10,9 +10,9 @@
 <meta property="og:title" content="원우와 혜림, 결혼합니다">
 <meta property="og:description" content="2026. 12. 19 SAT PM 1:30 · 빌라드지디 수서">
 <meta property="og:url" content="https://songej1997.github.io/wedding/">
-<meta property="og:image" content="https://songej1997.github.io/wedding/couple-illustration.png">
-<meta property="og:image:width" content="1535">
-<meta property="og:image:height" content="1024">
+<meta property="og:image" content="https://songej1997.github.io/wedding/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- ============================================================
@@ -108,8 +108,11 @@ section{ padding: 64px 28px; position:relative; }
 }
 
 .script-headline{
-  font-family: var(--font-script);
-  font-size: 46px;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 34px;
+  letter-spacing: .02em;
   text-align:center;
   color: var(--wine);
   line-height:1.2;
@@ -828,7 +831,7 @@ section{ padding: 64px 28px; position:relative; }
 .stage[data-state="unfold"] .letter-paper > *, .stage[data-state="open"] .letter-paper > *{ opacity:1; }
 
 .lt-name{ font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
-.lt-invited{ font-family:var(--font-script); font-size:52px; line-height:1; color:var(--wine); white-space:nowrap; }
+.lt-invited{ font-family:var(--font-en); font-style:italic; font-weight:500; font-size:30px; letter-spacing:.02em; line-height:1.2; color:var(--wine); white-space:nowrap; }
 .lt-heart{ width:15px; height:15px; color:var(--gold); margin-top:8px; }
 .lt-body{ margin-top:20px; font-family:var(--font-serif); font-size:14px; line-height:1.95; color:var(--ink); }
 .lt-body div{ white-space:nowrap; }
@@ -1087,8 +1090,8 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <div class="info-card guide-card">
       <dl class="guide">
         <div class="guide__row"><dt>주차</dt><dd>예식장 건너편 공영주차장<br>만차 시 가든파이브 주차장 이용</dd></div>
-        <div class="guide__row"><dt>지하철</dt><dd>수서역 4번 출구 직진 좌회전 후<br>맞은편 노란색 셔틀버스 탑승</dd></div>
-        <div class="guide__row"><dt>KTX</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스 탑승</dd></div>
+        <div class="guide__row"><dt>지하철</dt><dd>수서역 4번 출구 직진 좌회전 후<br>맞은편 노란색 셔틀버스</dd></div>
+        <div class="guide__row"><dt>KTX</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스</dd></div>
         <div class="guide__row"><dt>부산<br>전세버스</dt><dd>동래역 3번 출구 오전 7시 30분<br>차량번호 : 부산 70바 7141</dd></div>
       </dl>
       <p class="guide__note">* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
@@ -1205,7 +1208,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 
     <p class="closing__msg">귀한 시간 내어주심에<br>감사드립니다.</p>
 
-    <p class="eyebrow-en" style="color:var(--ink-soft);">WITH LOVE</p>
     <p class="closing__names">
       WONWOO CHOI <span class="amp">&amp;</span> HYERIM SONG
     </p>
@@ -1320,11 +1322,11 @@ const tiles = [];
       t.setAttribute('aria-label', `사진 ${i} 크게 보기`);
       t.style.left = (50 + x * PITCH) + '%';
       t.style.top = ((r * ROWH + (DROP[n] || 0) + TILE_H/2 + 1) / H * 100) + '%';
-      t.style.zIndex = (n % 2) ? 2 : 1;
+      t.style.zIndex = [6,8,10].includes(n) ? 3 : ((n % 2) ? 2 : 1);   // 7·9·11번째 사진은 얼굴이 가려지지 않게 앞으로
       t.style.setProperty('--i', n);
       t.style.setProperty('--r', ((n * 37) % 9 - 4) + 'deg');   // 살짝씩 기울어진 느낌
       const inner = document.createElement('span'); inner.className = 'tile__in';
-      const img = new Image(); img.alt = `갤러리 사진 ${i}`; img.decoding = 'async'; img.loading = 'lazy';
+      const img = new Image(); img.alt = `갤러리 사진 ${i}`; img.decoding = 'async';
       img.onerror = () => { t.classList.add('is-blank'); img.remove(); };
       img.src = photoName(i);
       inner.appendChild(img); t.appendChild(inner);
