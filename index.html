@@ -215,6 +215,8 @@ section{ padding: 64px 28px; position:relative; }
   font-size: 24px;
   color: var(--wine);
 }
+.cover__names--row{ margin-top:30px; display:flex; justify-content:center; align-items:baseline; gap:14px; white-space:nowrap; }
+.cover__names--row .amp{ display:inline; margin:0; font-size:26px; }
 .cover__names .amp{
   display:block;
   font-family: var(--font-script);
@@ -407,9 +409,19 @@ section{ padding: 64px 28px; position:relative; }
 }
 
 .wine-bottom-fade{
-  height: 60px;
-  background: linear-gradient(180deg, var(--wine-deep), var(--cream));
+  height: 120px;
+  margin: 0 -28px;                      /* 섹션 좌우 여백을 뚫고 끝까지 */
+  /* 다마스크 무늬가 그대로 비치다가 크림색으로 서서히 사라지는 부드러운 그라데이션 */
+  background: linear-gradient(180deg,
+    rgba(244,239,227,0) 0%, rgba(244,239,227,.06) 18%, rgba(244,239,227,.22) 36%,
+    rgba(244,239,227,.5) 55%, rgba(244,239,227,.8) 75%, rgba(244,239,227,.95) 90%, #F4EFE3 100%);
 }
+/* 스티커 느낌 일러스트: 버건디 위에서 자연스럽게 뜨도록 부드러운 그림자 */
+.candelabra-slot .illust, .flowers-left-slot .illust, .table-pink-slot .illust{
+  filter: drop-shadow(0 6px 10px rgba(12,2,5,.45));
+}
+.illust[hidden]{ display:none; }
+.toast-couple-slot .illust.is-rect{ object-fit:cover; border-radius:4px; border:5px solid #F4EFE3; box-shadow:0 12px 26px rgba(12,2,5,.5); }
 
 /* ============================================================
    4. 마음 전하실 곳
@@ -829,6 +841,35 @@ section{ padding: 64px 28px; position:relative; }
   font-family:var(--font-serif); font-size:15px; letter-spacing:.08em; color:var(--on-wine); opacity:.8; transition:opacity .5s;
 }
 
+
+/* ============================================================
+   하트 갤러리 (사진 19장) — 🔧 장수는 JS 의 GALLERY_COUNT 만 바꾸면 됩니다 (19장이 가장 예쁘게 맞아요)
+============================================================= */
+.heart{ position:relative; width:min(340px,100%); margin:34px auto 0; aspect-ratio:100/77; }
+.tile{
+  position:absolute; width:16.4%; aspect-ratio:1/1; padding:0; border:0; cursor:pointer;
+  background:#FEFCF6; box-shadow:0 5px 12px rgba(74,25,31,.26);
+  transform:translate(-50%,-50%) rotate(var(--r,0deg)) scale(.55); opacity:0;
+  transition:transform .7s cubic-bezier(.34,1.42,.5,1), opacity .5s ease;
+  transition-delay:calc(var(--i) * 55ms);
+}
+.tile .tile__in{ position:absolute; inset:3px; overflow:hidden; background:#E9DFC9; }
+.tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+.tile.is-blank .tile__in::after{ content:"\2661"; position:absolute; inset:0; display:grid; place-items:center; color:rgba(110,36,48,.35); font-size:18px; }
+.heart.is-in .tile{ opacity:1; transform:translate(-50%,-50%) rotate(var(--r,0deg)) scale(1); }
+.heart.is-in .tile:active{ transform:translate(-50%,-50%) rotate(0) scale(.94); transition-delay:0s; transition-duration:.15s; }
+.heart.is-in .tile:hover{ z-index:2; }
+.tile:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; z-index:3; }
+
+/* 확대 보기: 뒤 배경이 흐려지고, 사진이 살짝 커지며 나타납니다 */
+.lightbox{
+  background:rgba(34,10,14,.50);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+}
+.lightbox.is-open .lightbox__slide img{ animation:photoPop .55s cubic-bezier(.34,1.3,.5,1) both; }
+@keyframes photoPop{ from{ opacity:0; transform:scale(.78); } to{ opacity:1; transform:scale(1); } }
+.lightbox__slide img{ border-radius:2px; box-shadow:0 14px 40px rgba(10,2,4,.5); }
+
 /* ============================================================
    배경음악 토글 + 토스트 (기존 기능 유지)
 ============================================================= */
@@ -892,15 +933,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <p class="eyebrow-en cover__eyebrow">WEDDING INVITATION</p>
       <p class="cover__eyebrow-sub">— Welcome to Our Story —</p>
 
-      <div class="ceremony-slot illust-slot">
-        <img class="illust" src="couple-illustration.png" alt="원우 · 혜림 커플 일러스트"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="illust-placeholder" style="display:none;">couple-illustration.png</div>
-      </div>
-
-      <p class="cover__invited">YOU ARE INVITED<br>TO CELEBRATE<br>THE MARRIAGE OF</p>
-
-      <div class="cover__names">
+      <div class="cover__names cover__names--row">
         <span class="name">최원우</span>
         <span class="amp">&amp;</span>
         <span class="name">송혜림</span>
@@ -981,8 +1014,9 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 
     <div class="toast-scene">
       <div class="toast-couple-slot illust-slot">
-        <!-- <img class="illust" src="toast-couple.png" alt="건배하는 커플 일러스트"> -->
-        <div class="illust-placeholder" style="border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">toast-couple.png</div>
+        <!-- toast-couple.png 를 넣으면 자동으로 보이고, png 가 없으면 toast-couple.jpg 를 찾습니다 -->
+        <img class="illust" id="toastImg" alt="건배하는 커플 일러스트" hidden>
+        <div class="illust-placeholder" id="toastPh" style="border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">toast-couple.png</div>
       </div>
       <div class="flowers-left-slot illust-slot">
         <img class="illust" src="flowers.png" alt="꽃다발 일러스트"
@@ -999,8 +1033,8 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
     <!-- 🔧 tel: 뒤 번호를 실제 전화번호로 교체하세요. -->
     <div class="couple-call">
-      <a class="couple-call__link" href="tel:01000000000">&#128222; 신랑 최원우</a>
-      <a class="couple-call__link" href="tel:01000000000">&#128222; 신부 송혜림</a>
+      <a class="couple-call__link" href="tel:01097713386"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4-2 1.4a11 11 0 0 0 5.1 5.1l1.4-2 4 1.4v3c0 1-.8 1.8-1.8 1.8C10.8 18.2 5.8 13.2 4.8 5.3 4.8 4.3 5.6 3.5 6.6 3.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> 신랑 최원우</a>
+      <a class="couple-call__link" href="tel:01065491993"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4-2 1.4a11 11 0 0 0 5.1 5.1l1.4-2 4 1.4v3c0 1-.8 1.8-1.8 1.8C10.8 18.2 5.8 13.2 4.8 5.3 4.8 4.3 5.6 3.5 6.6 3.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> 신부 송혜림</a>
     </div>
     <button class="host-call-link" id="hostCallOpen">혼주에게 연락하기</button>
 
@@ -1023,15 +1057,15 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
           <div class="host-sheet__person">
             <p class="host-sheet__person-name">아버지 최백림</p>
             <div class="host-sheet__actions">
-              <a href="tel:01000000000" aria-label="전화">&#128222;</a>
-              <a href="sms:01000000000" aria-label="문자">&#9993;&#65039;</a>
+              <a href="tel:01062273386" aria-label="전화">&#128222;</a>
+              <a href="sms:01062273386" aria-label="문자">&#9993;&#65039;</a>
             </div>
           </div>
           <div class="host-sheet__person">
             <p class="host-sheet__person-name">어머니 김미애</p>
             <div class="host-sheet__actions">
-              <a href="tel:01000000000" aria-label="전화">&#128222;</a>
-              <a href="sms:01000000000" aria-label="문자">&#9993;&#65039;</a>
+              <a href="tel:01066273386" aria-label="전화">&#128222;</a>
+              <a href="sms:01066273386" aria-label="문자">&#9993;&#65039;</a>
             </div>
           </div>
         </div>
@@ -1040,15 +1074,15 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
           <div class="host-sheet__person">
             <p class="host-sheet__person-name">아버지 송동섭</p>
             <div class="host-sheet__actions">
-              <a href="tel:01000000000" aria-label="전화">&#128222;</a>
-              <a href="sms:01000000000" aria-label="문자">&#9993;&#65039;</a>
+              <a href="tel:01052818126" aria-label="전화">&#128222;</a>
+              <a href="sms:01052818126" aria-label="문자">&#9993;&#65039;</a>
             </div>
           </div>
           <div class="host-sheet__person">
             <p class="host-sheet__person-name">어머니 박옥이</p>
             <div class="host-sheet__actions">
-              <a href="tel:01000000000" aria-label="전화">&#128222;</a>
-              <a href="sms:01000000000" aria-label="문자">&#9993;&#65039;</a>
+              <a href="tel:01033625175" aria-label="전화">&#128222;</a>
+              <a href="sms:01033625175" aria-label="문자">&#9993;&#65039;</a>
             </div>
           </div>
         </div>
@@ -1076,23 +1110,23 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">신랑 최원우</p>
-                <p class="wine-account-row__num">토스뱅크 1000-0000-0000</p>
+                <p class="wine-account-row__num">토스뱅크 1000-6203-5297</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="1000-0000-0000" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="1000-6203-5297" aria-label="계좌번호 복사">&#128203;</button>
             </div>
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">아버지 최백림</p>
-                <p class="wine-account-row__num">신한은행 000-000-000000</p>
+                <p class="wine-account-row__num">신한은행 125-001-04-034411</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="000-000-000000" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="125-001-04-034411" aria-label="계좌번호 복사">&#128203;</button>
             </div>
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">어머니 김미애</p>
-                <p class="wine-account-row__num">국민은행 000-000-000000</p>
+                <p class="wine-account-row__num">부산은행 031-1206-4931-8</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="000-000-000000" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="031-1206-4931-8" aria-label="계좌번호 복사">&#128203;</button>
             </div>
           </div>
         </div>
@@ -1108,23 +1142,23 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">신부 송혜림</p>
-                <p class="wine-account-row__num">토스뱅크 1000-7506-5010</p>
+                <p class="wine-account-row__num">국민은행 5889-020403-4680</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="1000-7506-5010" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="5889-020403-4680" aria-label="계좌번호 복사">&#128203;</button>
             </div>
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">아버지 송동섭</p>
-                <p class="wine-account-row__num">신한은행 000-000-000000</p>
+                <p class="wine-account-row__num">하나은행 148-19-51409-8</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="000-000-000000" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="148-19-51409-8" aria-label="계좌번호 복사">&#128203;</button>
             </div>
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">어머니 박옥이</p>
-                <p class="wine-account-row__num">국민은행 000-000-000000</p>
+                <p class="wine-account-row__num">우리은행 1002-541-057128</p>
               </div>
-              <button class="wine-account-row__copy" data-copy-target="000-000-000000" aria-label="계좌번호 복사">&#128203;</button>
+              <button class="wine-account-row__copy" data-copy-target="1002-541-057128" aria-label="계좌번호 복사">&#128203;</button>
             </div>
           </div>
         </div>
@@ -1159,11 +1193,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
     </div>
 
-    <div class="nav-buttons">
-      <a id="naverMapLink" href="#" target="_blank" rel="noopener">NAVER MAP</a>
-      <a id="kakaoMapLink" href="#" target="_blank" rel="noopener">KAKAO MAP</a>
-    </div>
-
     <div class="info-card">
       <p class="info-card__title">PARKING</p>
       <p><b>무료 하객 전용 주차장</b> : "송파구 충민로10"(문정동)</p>
@@ -1176,6 +1205,12 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <p>② SRT수서역 1번출구 도보 30m 직진 후 우회전, 기아서비스 맞은편 노란색 셔틀버스 탑승</p>
       <p>* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
       <p style="margin-top:8px;"><b>버스 이용 시</b><br>강남한양수자인 APT정류장 하차, 도보 10분 내외 (지선 3426 · 간선 402)</p>
+    </div>
+    <div class="info-card">
+      <p class="info-card__title">BUSAN CHARTER BUS</p>
+      <p><b>부산 대절버스 안내</b></p>
+      <p>동래역 3번 출구 · 오전 7시 30분 출발</p>
+      <p>차량번호 : 부산 70바 7141</p>
     </div>
     <div class="info-card">
       <p class="info-card__title">NOTICE</p>
@@ -1191,16 +1226,9 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <p class="divider-label">OUR MOMENTS</p>
     <p class="script-headline">Together Always</p>
 
-    <div class="gallery__viewport" style="margin-top:34px;">
-      <div class="gallery__clip">
-        <div class="gallery__track" id="galleryTrack">
-          <!-- JS가 gallery1.jpg ~ gallery10.jpg 슬라이드를 자동 생성합니다 -->
-        </div>
-      </div>
-      <button class="gallery__arrow gallery__arrow--prev" id="galleryPrev" aria-label="이전 사진">&#10094;</button>
-      <button class="gallery__arrow gallery__arrow--next" id="galleryNext" aria-label="다음 사진">&#10095;</button>
-    </div>
-    <p class="gallery__count" id="galleryCount">1 / 10</p>
+    <!-- 사진 14장이 하트 모양으로 배치됩니다. 사진을 누르면 커지면서 뒤가 흐려지고, 옆으로 넘겨 볼 수 있어요. -->
+    <div class="heart" id="heart" role="group" aria-label="사진 14장. 누르면 크게 볼 수 있어요"></div>
+    <p class="gallery__count">사진을 눌러 보세요</p>
   </section>
 
   <!-- 갤러리 확대 라이트박스 -->
@@ -1209,7 +1237,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <button class="lightbox__arrow lightbox__arrow--prev" id="lightboxPrev" aria-label="이전 사진">&#10094;</button>
     <button class="lightbox__arrow lightbox__arrow--next" id="lightboxNext" aria-label="다음 사진">&#10095;</button>
     <div class="lightbox__track" id="lightboxTrack"></div>
-    <p class="lightbox__count" id="lightboxCount">1 / 10</p>
+    <p class="lightbox__count" id="lightboxCount">1 / 14</p>
   </div>
 
   <!-- ============================================================
@@ -1233,7 +1261,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <div class="illust-placeholder">globe-plane.png<br>(비행기 · 지구본 커플 일러스트)</div>
     </div>
 
-    <p class="closing__msg">Thank you<br>for celebrating<br>our beginning.</p>
+    <p class="closing__msg">귀한 시간 내어주심에<br>감사드립니다.</p>
 
     <p class="eyebrow-en" style="color:var(--ink-soft);">WITH LOVE</p>
     <p class="closing__names">
@@ -1345,106 +1373,90 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* ============================================================
-   갤러리 - 스와이프 캐러셀
-   🔧 이미지 개수를 바꾸려면 GALLERY_COUNT 값을 수정하세요.
+   하트 갤러리 + 확대 보기
+   🔧 사진은 index.html 과 같은 폴더에 gallery1.jpg ~ gallery19.jpg 로 넣으세요.
+      파일 이름 규칙이 다르면 photoName() 한 줄만 고치면 됩니다.
 ============================================================= */
-const GALLERY_COUNT = 10;
-const galleryTrack = document.getElementById('galleryTrack');
-const galleryCount = document.getElementById('galleryCount');
-const galleryPrev = document.getElementById('galleryPrev');
-const galleryNext = document.getElementById('galleryNext');
-let galleryIndex = 0;
+const GALLERY_COUNT = 14;   // 🔧 사진 장수 (14장 / 19장 하트 모양이 준비돼 있어요)
+const photoName = (i) => `gallery${i}.jpg`;
 
-for(let i = 1; i <= GALLERY_COUNT; i++){
-  const fileName = `gallery${i}.jpg`; // 🔧 실제 파일명 규칙과 다르면 이 부분만 수정하세요.
-  const slide = document.createElement('div');
-  slide.className = 'gallery__slide';
-  slide.innerHTML = `
-    <div class="deckle-frame illust-slot">
-      <img src="${fileName}" alt="갤러리 사진 ${i}"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="illust-placeholder" style="display:none;">${fileName}</div>
-    </div>
-  `;
-  galleryTrack.appendChild(slide);
-}
-
-function updateGalleryPosition(animate = true){
-  galleryTrack.style.transition = animate ? 'transform .35s ease' : 'none';
-  galleryTrack.style.transform = `translateX(${-galleryIndex * 100}%)`;
-  galleryCount.textContent = `${galleryIndex + 1} / ${GALLERY_COUNT}`;
-}
-function goGallery(delta){
-  galleryIndex = Math.min(Math.max(galleryIndex + delta, 0), GALLERY_COUNT - 1);
-  updateGalleryPosition(true);
-}
-galleryPrev.addEventListener('click', () => goGallery(-1));
-galleryNext.addEventListener('click', () => goGallery(1));
-
-let gTouchStartX = 0, gTouchDeltaX = 0, gIsTouching = false;
-galleryTrack.addEventListener('touchstart', (e) => {
-  gIsTouching = true;
-  gTouchStartX = e.touches[0].clientX;
-  galleryTrack.style.transition = 'none';
-}, { passive:true });
-galleryTrack.addEventListener('touchmove', (e) => {
-  if(!gIsTouching) return;
-  gTouchDeltaX = e.touches[0].clientX - gTouchStartX;
-  const baseOffset = -galleryIndex * 100;
-  const dragPercent = (gTouchDeltaX / galleryTrack.clientWidth) * 100;
-  galleryTrack.style.transform = `translateX(${baseOffset + dragPercent}%)`;
-}, { passive:true });
-galleryTrack.addEventListener('touchend', () => {
-  gIsTouching = false;
-  const threshold = galleryTrack.clientWidth * 0.18;
-  if(gTouchDeltaX > threshold) goGallery(-1);
-  else if(gTouchDeltaX < -threshold) goGallery(1);
-  else updateGalleryPosition(true);
-  gTouchDeltaX = 0;
-});
-updateGalleryPosition(false);
-
-/* ============================================================
-   갤러리 사진 확대 (라이트박스)
-   갤러리 사진을 탭하면 현재 사진이 전체화면으로 확대됩니다.
-============================================================= */
+// 하트 배치: 줄마다 [가로 위치들] (단위: 사진 한 칸)
+const HEART_LAYOUTS = {
+  14: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-1,0,1], [0]],                      // 4+6+3+1
+  19: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-2,-1,0,1,2], [-1,0,1], [0]]       // 4+6+5+3+1
+};
+const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[14];
+const heartEl = document.getElementById('heart');
 const lightbox = document.getElementById('lightbox');
 const lightboxTrack = document.getElementById('lightboxTrack');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
 const lightboxNext = document.getElementById('lightboxNext');
 const lightboxCount = document.getElementById('lightboxCount');
+let lightboxIndex = 0, lastTile = null;
+const tiles = [];
 
-// 라이트박스용 슬라이드를 갤러리와 동일한 순서로 미리 생성
+(function buildHeart(){
+  const PITCH = 15.6, ROWH = 14.6, TILE = 16.4;           // 가로 폭(%) 기준
+  const H = (HEART_ROWS.length - 1) * ROWH + TILE + 2;      // 하트 전체 높이(%)
+  heartEl.style.aspectRatio = `100 / ${H}`;
+  let n = 0;
+  HEART_ROWS.forEach((row, r) => {
+    row.forEach((x) => {
+      if(n >= GALLERY_COUNT) return;
+      const i = n + 1;
+      const t = document.createElement('button');
+      t.type = 'button'; t.className = 'tile';
+      t.setAttribute('aria-label', `사진 ${i} 크게 보기`);
+      t.style.left = (50 + x * PITCH) + '%';
+      t.style.top = ((r * ROWH + TILE/2 + 1) / H * 100) + '%';
+      t.style.setProperty('--i', n);
+      t.style.setProperty('--r', ((n * 37) % 7 - 3) + 'deg');   // 살짝씩 기울어진 느낌
+      const inner = document.createElement('span'); inner.className = 'tile__in';
+      const img = new Image(); img.alt = `갤러리 사진 ${i}`; img.decoding = 'async'; img.loading = 'lazy';
+      img.onerror = () => { t.classList.add('is-blank'); img.remove(); };
+      img.src = photoName(i);
+      inner.appendChild(img); t.appendChild(inner);
+      t.addEventListener('click', () => openLightbox(n0(t), t));
+      t.dataset.idx = n;
+      heartEl.appendChild(t); tiles.push(t); n++;
+    });
+  });
+  function n0(t){ return Number(t.dataset.idx); }
+  // 하트가 화면에 들어오면 사진이 하나씩 나타남
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { if(e.isIntersecting){ heartEl.classList.add('is-in'); io.disconnect(); } });
+  }, { threshold: 0.2 });
+  io.observe(heartEl);
+})();
+
+// 확대 보기용 슬라이드(같은 순서)
 for(let i = 1; i <= GALLERY_COUNT; i++){
-  const fileName = `gallery${i}.jpg`;
   const slide = document.createElement('div');
   slide.className = 'lightbox__slide';
-  slide.innerHTML = `<img src="${fileName}" alt="갤러리 사진 ${i} 확대">`;
-  lightboxTrack.appendChild(slide);
+  const im = document.createElement('img');
+  im.alt = `갤러리 사진 ${i} 확대`; im.decoding = 'async'; im.loading = 'lazy'; im.src = photoName(i);
+  im.onerror = () => { im.style.display = 'none'; const m = document.createElement('p'); m.textContent = '사진 준비 중'; m.style.color = '#F4EFE3'; slide.appendChild(m); };
+  slide.appendChild(im); lightboxTrack.appendChild(slide);
 }
 
-let lightboxIndex = 0;
-
-function openLightbox(index){
-  lightboxIndex = index;
-  lightboxTrack.style.transition = 'none';
-  lightboxTrack.style.transform = `translateX(${-lightboxIndex * 100}%)`;
-  lightboxCount.textContent = `${lightboxIndex + 1} / ${GALLERY_COUNT}`;
-  lightbox.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox(){
-  lightbox.classList.remove('is-open');
-  document.body.style.overflow = '';
-  // 라이트박스에서 넘긴 사진 위치를 뒤의 갤러리 캐러셀에도 반영
-  galleryIndex = lightboxIndex;
-  updateGalleryPosition(false);
-}
 function updateLightboxPosition(animate = true){
   lightboxTrack.style.transition = animate ? 'transform .3s ease' : 'none';
   lightboxTrack.style.transform = `translateX(${-lightboxIndex * 100}%)`;
   lightboxCount.textContent = `${lightboxIndex + 1} / ${GALLERY_COUNT}`;
+}
+function openLightbox(index, fromTile){
+  lastTile = fromTile || null;
+  lightboxIndex = index;
+  updateLightboxPosition(false);
+  lightbox.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  lightboxClose.focus({ preventScroll:true });
+}
+function closeLightbox(){
+  lightbox.classList.remove('is-open');
+  document.body.style.overflow = '';
+  if(lastTile) lastTile.focus({ preventScroll:true });
 }
 function goLightbox(delta){
   lightboxIndex = Math.min(Math.max(lightboxIndex + delta, 0), GALLERY_COUNT - 1);
@@ -1452,55 +1464,44 @@ function goLightbox(delta){
 }
 lightboxPrev.addEventListener('click', () => goLightbox(-1));
 lightboxNext.addEventListener('click', () => goLightbox(1));
-
-// 갤러리 슬라이드를 탭하면(스와이프가 아닌 탭일 때만) 라이트박스를 엽니다.
-let gTapStartX = 0, gTapStartY = 0;
-galleryTrack.addEventListener('touchstart', (e) => {
-  gTapStartX = e.touches[0].clientX;
-  gTapStartY = e.touches[0].clientY;
-}, { passive:true });
-galleryTrack.addEventListener('touchend', (e) => {
-  const dx = Math.abs((e.changedTouches[0]?.clientX ?? gTapStartX) - gTapStartX);
-  const dy = Math.abs((e.changedTouches[0]?.clientY ?? gTapStartY) - gTapStartY);
-  if(dx < 8 && dy < 8) openLightbox(galleryIndex);
-});
-// 데스크톱(마우스) 클릭 대응
-galleryTrack.addEventListener('click', () => openLightbox(galleryIndex));
-
 lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => {
-  if(e.target === lightbox) closeLightbox();
-});
+lightbox.addEventListener('click', (e) => { if(e.target === lightbox || e.target.classList.contains('lightbox__slide')) closeLightbox(); });
 document.addEventListener('keydown', (e) => {
   if(!lightbox.classList.contains('is-open')) return;
   if(e.key === 'Escape') closeLightbox();
   if(e.key === 'ArrowRight') goLightbox(1);
   if(e.key === 'ArrowLeft') goLightbox(-1);
 });
-
-// 라이트박스 안에서 좌우 스와이프로 사진 넘기기
-let lbTouchStartX = 0, lbTouchDeltaX = 0, lbIsTouching = false;
-lightboxTrack.addEventListener('touchstart', (e) => {
-  lbIsTouching = true;
-  lbTouchStartX = e.touches[0].clientX;
-  lightboxTrack.style.transition = 'none';
-}, { passive:true });
+// 좌우 스와이프
+let lbX = 0, lbD = 0, lbT = false;
+lightboxTrack.addEventListener('touchstart', (e) => { lbT = true; lbX = e.touches[0].clientX; lightboxTrack.style.transition = 'none'; }, { passive:true });
 lightboxTrack.addEventListener('touchmove', (e) => {
-  if(!lbIsTouching) return;
-  lbTouchDeltaX = e.touches[0].clientX - lbTouchStartX;
-  const baseOffset = -lightboxIndex * 100;
-  const dragPercent = (lbTouchDeltaX / lightboxTrack.clientWidth) * 100;
-  lightboxTrack.style.transform = `translateX(${baseOffset + dragPercent}%)`;
+  if(!lbT) return;
+  lbD = e.touches[0].clientX - lbX;
+  lightboxTrack.style.transform = `translateX(${-lightboxIndex * 100 + (lbD / lightboxTrack.clientWidth) * 100}%)`;
 }, { passive:true });
 lightboxTrack.addEventListener('touchend', () => {
-  lbIsTouching = false;
-  const threshold = lightboxTrack.clientWidth * 0.15;
-  if(lbTouchDeltaX > threshold) goLightbox(-1);
-  else if(lbTouchDeltaX < -threshold) goLightbox(1);
-  else updateLightboxPosition(true);
-  lbTouchDeltaX = 0;
+  lbT = false;
+  const th = lightboxTrack.clientWidth * 0.15;
+  if(lbD > th) goLightbox(-1); else if(lbD < -th) goLightbox(1); else updateLightboxPosition(true);
+  lbD = 0;
 });
 
+/* toast-couple 이미지: png → jpg → jpeg 순서로 찾아서 있으면 보여줍니다 */
+(function(){
+  const img = document.getElementById('toastImg'), ph = document.getElementById('toastPh');
+  const names = ['toast-couple.png','toast-couple.jpg','toast-couple.jpeg'];
+  (function tryNext(i){
+    if(i >= names.length) return;
+    const t = new Image();
+    t.onload = () => {
+      img.src = names[i]; img.hidden = false; ph.style.display = 'none';
+      if(!/\.png$/.test(names[i])) img.classList.add('is-rect');   // 배경이 있는 사진이면 액자처럼
+    };
+    t.onerror = () => tryNext(i + 1);
+    t.src = names[i];
+  })(0);
+})();
 
 /* ============================================================
    편지봉투 열기 (모시는 글)
@@ -1603,8 +1604,6 @@ document.querySelectorAll('.wine-account-row__copy').forEach((btn) => {
    오시는 길 - 주소 복사 + 길찾기 딥링크
 ============================================================= */
 const VENUE_ADDRESS = '서울시 강남구 밤고개로21길 79 빌라드지디 수서 단독홀';
-document.getElementById('naverMapLink').href = `https://map.naver.com/v5/search/${encodeURIComponent(VENUE_ADDRESS)}`;
-document.getElementById('kakaoMapLink').href = `https://map.kakao.com/link/search/${encodeURIComponent(VENUE_ADDRESS)}`;
 document.getElementById('addrCopyBtn').addEventListener('click', async () => {
   const ok = await copyText(VENUE_ADDRESS);
   showToast(ok ? '주소가 복사되었습니다' : '복사에 실패했습니다');
