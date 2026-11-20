@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>원우와 혜림, 결혼합니다</title>
+<meta name="description" content="2026년 12월 19일 토요일 오후 1시 30분 · 빌라드지디 수서">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="원우와 혜림">
+<meta property="og:title" content="원우와 혜림, 결혼합니다">
+<meta property="og:description" content="2026. 12. 19 SAT PM 1:30 · 빌라드지디 수서">
+<meta property="og:url" content="https://songej1997.github.io/wedding/">
+<meta property="og:image" content="https://songej1997.github.io/wedding/couple-illustration.png">
+<meta property="og:image:width" content="1535">
+<meta property="og:image:height" content="1024">
+<meta name="twitter:card" content="summary_large_image">
 
 <!-- ============================================================
   폰트
@@ -814,23 +824,16 @@ section{ padding: 64px 28px; position:relative; }
   position:relative; height:var(--LH); padding:30px 14px 26px; background:var(--cream-card);
   display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:var(--ink);
 }
-.letter-paper::after{ /* 세 번 접었던 자국 */
-  content:""; position:absolute; inset:0; pointer-events:none; opacity:1 !important; transition:none;
-  background:
-    linear-gradient(transparent calc(33.3% - 1px),rgba(90,60,30,.14) 33.3%,rgba(255,255,255,.4) calc(33.3% + 1px),transparent calc(33.3% + 3px)),
-    linear-gradient(transparent calc(66.6% - 1px),rgba(90,60,30,.14) 66.6%,rgba(255,255,255,.4) calc(66.6% + 1px),transparent calc(66.6% + 3px));
-}
 .letter-paper > *{ opacity:0; transition:opacity .9s .5s var(--soft); }
-.letter-paper > .letter-paper__fold{ opacity:1; }
 .stage[data-state="unfold"] .letter-paper > *, .stage[data-state="open"] .letter-paper > *{ opacity:1; }
 
-.lt-name{ font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
+.lt-name{ font-family:var(--font-en),var(--font-serif); letter-spacing:.06em; font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
 .lt-invited{ font-family:var(--font-script); font-size:52px; line-height:1; color:var(--wine); white-space:nowrap; }
 .lt-heart{ width:15px; height:15px; color:var(--gold); margin-top:8px; }
-.lt-body{ margin-top:20px; font-family:var(--font-serif); font-size:14px; line-height:1.95; color:var(--ink); }
+.lt-body{ margin-top:20px; font-family:var(--font-en),var(--font-serif); font-size:14px; line-height:2; letter-spacing:.06em; color:var(--ink); }
 .lt-body div{ white-space:nowrap; }
 .lt-body .gap{ height:14px; }
-.lt-sign{ margin-top:24px; font-family:var(--font-serif); font-size:13.5px; color:var(--ink); }
+.lt-sign{ margin-top:24px; font-family:var(--font-en),var(--font-serif); letter-spacing:.06em; font-size:13.5px; color:var(--ink); }
 .lt-sign b{ font-weight:700; }
 .lt-sign .sep{ margin:0 12px; color:var(--gold); }
 
@@ -869,24 +872,8 @@ section{ padding: 64px 28px; position:relative; }
 .lightbox__slide img{ border-radius:2px; box-shadow:0 14px 40px rgba(10,2,4,.5); }
 
 /* ============================================================
-   배경음악 토글 + 토스트 (기존 기능 유지)
+   토스트
 ============================================================= */
-.music-toggle{
-  position: fixed; top: 18px; right: 18px; z-index: 1300;
-  width: 40px; height:40px; border-radius: 50%;
-  border: 1px solid rgba(244,239,227,0.5);
-  background: rgba(74,25,31,0.75);
-  backdrop-filter: blur(4px);
-  color: var(--on-wine);
-  font-size: 16px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-}
-.music-toggle.is-playing .music-toggle__icon{ animation: music-spin 3.5s linear infinite; }
-@keyframes music-spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-@media (prefers-reduced-motion: reduce){ .music-toggle.is-playing .music-toggle__icon{ animation:none; } }
-
 .toast{
   position: fixed; left: 50%; bottom: 40px;
   transform: translate(-50%, 20px);
@@ -907,12 +894,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 </style>
 </head>
 <body>
-
-<!-- 배경음악 -->
-<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
-<button class="music-toggle" id="musicToggle" aria-label="배경음악 재생/정지">
-  <span class="music-toggle__icon" id="musicToggleIcon">&#127925;</span>
-</button>
 
 <div class="wrap">
 
@@ -969,13 +950,11 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
             <div class="lt-invited">you're invited</div>
             <svg class="lt-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 C5 15 2 11 2 7.6 C2 4.6 4.5 2.6 7 2.6 C9 2.6 11 3.8 12 5.7 C13 3.8 15 2.6 17 2.6 C19.5 2.6 22 4.6 22 7.6 C22 11 19 15 12 21Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
             <div class="lt-body">
-              <div>서로 다른 두 사람이 만나</div>
-              <div>하나의 삶을 그려나가려 합니다.</div>
+              <div>저희 두 사람, 사랑의 결실을 맺습니다.</div>
               <div class="gap"></div>
-              <div>계절이 바뀌고 시간이 흘러도</div>
-              <div>변하지 않을 마음을 약속하는 자리에</div>
-              <div>귀한 걸음으로 축복해 주시면</div>
-              <div>더없는 기쁨이 되겠습니다.</div>
+              <div>귀한 걸음으로 함께하시어</div>
+              <div>저희의 새로운 시작을 축복해 주신다면</div>
+              <div>더없이 감사하고 행복하겠습니다.</div>
             </div>
             <div class="lt-sign">신랑 <b>최원우</b><span class="sep">·</span>신부 <b>송혜림</b></div>
           </div>
@@ -1243,39 +1222,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   배경음악 : 자동재생 시도 + 실패 시 첫 터치에서 재생 + 토글 버튼
-============================================================= */
-const bgm = document.getElementById('bgm');
-const musicToggle = document.getElementById('musicToggle');
-const musicToggleIcon = document.getElementById('musicToggleIcon');
-bgm.volume = 0.5;
-
-function setMusicButtonState(isPlaying){
-  musicToggle.classList.toggle('is-playing', isPlaying);
-  musicToggleIcon.textContent = isPlaying ? '\u{1F3B5}' : '\u{1F507}';
-}
-function tryAutoplay(){
-  const playPromise = bgm.play();
-  if(playPromise !== undefined){
-    playPromise.then(() => setMusicButtonState(true)).catch(() => {
-      setMusicButtonState(false);
-      const startOnFirstTouch = () => {
-        bgm.play().then(() => setMusicButtonState(true)).catch(() => {});
-        document.removeEventListener('touchstart', startOnFirstTouch);
-        document.removeEventListener('click', startOnFirstTouch);
-      };
-      document.addEventListener('touchstart', startOnFirstTouch, { once:true });
-      document.addEventListener('click', startOnFirstTouch, { once:true });
-    });
-  }
-}
-tryAutoplay();
-musicToggle.addEventListener('click', () => {
-  if(bgm.paused){ bgm.play().then(() => setMusicButtonState(true)).catch(() => {}); }
-  else{ bgm.pause(); setMusicButtonState(false); }
-});
-
 /* ============================================================
    전역 유틸
 ============================================================= */
