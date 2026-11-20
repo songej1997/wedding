@@ -541,6 +541,12 @@ section{ padding: 64px 28px; position:relative; }
   margin-bottom: 8px;
 }
 .info-card p{ font-size: 13px; color: var(--ink-soft); line-height:1.8; }
+.guide-card{ padding:22px 18px; }
+.guide__row{ display:grid; grid-template-columns:76px 1fr; gap:10px; padding:12px 0; align-items:start; }
+.guide__row + .guide__row{ border-top:1px solid rgba(60,46,39,.1); }
+.guide dt{ font-family:var(--font-serif); font-weight:700; font-size:14px; color:var(--ink); line-height:1.5; }
+.guide dd{ font-family:var(--font-serif); font-size:13px; color:var(--ink); line-height:1.85; }
+.guide__note{ margin-top:10px; padding-top:12px; border-top:1px solid rgba(60,46,39,.1); font-size:11.5px !important; }
 
 /* ============================================================
    7. OUR MOMENTS (갤러리)
@@ -845,9 +851,9 @@ section{ padding: 64px 28px; position:relative; }
 /* ============================================================
    하트 갤러리 (사진 19장) — 🔧 장수는 JS 의 GALLERY_COUNT 만 바꾸면 됩니다 (19장이 가장 예쁘게 맞아요)
 ============================================================= */
-.heart{ position:relative; width:min(340px,100%); margin:34px auto 0; aspect-ratio:100/77; }
+.heart{ position:relative; width:min(380px,100%); margin:34px auto 0; aspect-ratio:100/77; }
 .tile{
-  position:absolute; width:16.4%; aspect-ratio:1/1; padding:0; border:0; cursor:pointer;
+  position:absolute; width:14.6%; aspect-ratio:1/1; padding:0; border:0; cursor:pointer;
   background:#FEFCF6; box-shadow:0 5px 12px rgba(74,25,31,.26);
   transform:translate(-50%,-50%) rotate(var(--r,0deg)) scale(.55); opacity:0;
   transition:transform .7s cubic-bezier(.34,1.42,.5,1), opacity .5s ease;
@@ -954,7 +960,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
 
   <!-- ============================================================
        2. 모시는 글 (다마스크 버건디 섹션)
-       🔧 toast-couple.png 은 아직 없어서 placeholder로 남겨뒀습니다.
+       
   ============================================================= -->
   <section class="invite-wine reveal">
     <p class="headline-serif">모시는 글</p>
@@ -1010,24 +1016,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <img class="illust" src="candelabra.png" alt="촛대 일러스트"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">candelabra.png</div>
-    </div>
-
-    <div class="toast-scene">
-      <div class="toast-couple-slot illust-slot">
-        <!-- toast-couple.png 를 넣으면 자동으로 보이고, png 가 없으면 toast-couple.jpg 를 찾습니다 -->
-        <img class="illust" id="toastImg" alt="건배하는 커플 일러스트" hidden>
-        <div class="illust-placeholder" id="toastPh" style="border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6);">toast-couple.png</div>
-      </div>
-      <div class="flowers-left-slot illust-slot">
-        <img class="illust" src="flowers.png" alt="꽃다발 일러스트"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6); font-size:9px;">flowers.png</div>
-      </div>
-      <div class="table-pink-slot illust-slot">
-        <img class="illust" src="table-pink.png" alt="테이블 일러스트"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="illust-placeholder" style="display:none; border-color:rgba(244,239,227,0.35); color:rgba(244,239,227,0.6); font-size:9px;">table-pink.png</div>
-      </div>
     </div>
 
     <!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
@@ -1089,6 +1077,58 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       </div>
     </div>
   </div>
+
+
+  <!-- ============================================================
+       6. OUR MOMENTS (갤러리)
+       🔧 gallery1.jpg ~ gallery5.jpg 를 실제 사진으로 교체하세요.
+  ============================================================= -->
+  <section class="gallery reveal">
+    <p class="divider-label">OUR MOMENTS</p>
+    <p class="script-headline">Together Always</p>
+
+    <!-- 사진 15장이 하트 모양으로 배치됩니다. 사진을 누르면 커지면서 뒤가 흐려지고, 옆으로 넘겨 볼 수 있어요. -->
+    <div class="heart" id="heart" role="group" aria-label="사진 15장. 누르면 크게 볼 수 있어요"></div>
+  </section>
+
+  <!-- ============================================================
+       5. 오시는 길
+       🔧 venue-illustration.png / directions-map.jpg 적용 완료
+  ============================================================= -->
+  <section class="location reveal">
+    <p class="divider-label">LOCATION</p>
+
+    <div class="venue-slot illust-slot">
+      <img class="illust" src="venue-illustration.png" alt="예식장 정원 일러스트"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="illust-placeholder" style="display:none;">venue-illustration.png</div>
+    </div>
+
+    <p class="eyebrow-en" style="color:var(--gold); margin-bottom:8px;">VENUE</p>
+    <p class="location__venue-name">빌라드지디 수서 단독홀</p>
+    <p class="location__addr" id="venueAddr">서울시 강남구 밤고개로21길 79</p>
+    <p class="location__tel">문의전화 02-543-2555</p>
+    <button class="location__copy" id="addrCopyBtn">&#128203; 주소 복사</button>
+
+    <!-- 손그림 약도 이미지 : 페이지 배경과 자연스럽게 이어지도록 테두리/배경 없이 원본 비율 그대로 표시 -->
+    <div class="map-holder illust-slot" id="mapHolder" style="padding:0; overflow:hidden; height:auto; border:none; background:transparent; box-shadow:none;">
+      <img src="directions-map.jpg" alt="약도"
+           style="display:block; width:100%; height:auto;"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
+    </div>
+
+    <!-- 주차 / 지하철 / SRT / 부산 대절버스 안내 -->
+    <div class="info-card guide-card">
+      <dl class="guide">
+        <div class="guide__row"><dt>주차</dt><dd>예식장 건너편 공영주차장<br>만차 시 가든파이브 주차장 이용 가능</dd></div>
+        <div class="guide__row"><dt>지하철</dt><dd>수서역 4번 출구 직진 좌회전 후<br>맞은편 노란색 셔틀버스 탑승</dd></div>
+        <div class="guide__row"><dt>SRT</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스 탑승</dd></div>
+        <div class="guide__row"><dt>부산<br>대절버스</dt><dd>동래역 3번 출구 오전 7시 30분 출발<br>차량번호 : 부산 70바 7141</dd></div>
+      </dl>
+      <p class="guide__note">* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
+    </div>
+  </section>
 
   <!-- ============================================================
        4. 마음 전하실 곳
@@ -1166,70 +1206,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     </div>
   </section>
 
-  <!-- ============================================================
-       5. 오시는 길
-       🔧 venue-illustration.png / directions-map.jpg 적용 완료
-  ============================================================= -->
-  <section class="location reveal">
-    <p class="divider-label">LOCATION</p>
-
-    <div class="venue-slot illust-slot">
-      <img class="illust" src="venue-illustration.png" alt="예식장 정원 일러스트"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="illust-placeholder" style="display:none;">venue-illustration.png</div>
-    </div>
-
-    <p class="eyebrow-en" style="color:var(--gold); margin-bottom:8px;">VENUE</p>
-    <p class="location__venue-name">빌라드지디 수서 단독홀</p>
-    <p class="location__addr" id="venueAddr">서울시 강남구 밤고개로21길 79</p>
-    <p class="location__tel">문의전화 02-543-2555</p>
-    <button class="location__copy" id="addrCopyBtn">&#128203; 주소 복사</button>
-
-    <!-- 손그림 약도 이미지 : 페이지 배경과 자연스럽게 이어지도록 테두리/배경 없이 원본 비율 그대로 표시 -->
-    <div class="map-holder illust-slot" id="mapHolder" style="padding:0; overflow:hidden; height:auto; border:none; background:transparent; box-shadow:none;">
-      <img src="directions-map.jpg" alt="약도"
-           style="display:block; width:100%; height:auto;"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
-    </div>
-
-    <div class="info-card">
-      <p class="info-card__title">PARKING</p>
-      <p><b>무료 하객 전용 주차장</b> : "송파구 충민로10"(문정동)</p>
-      <p>"가든5" 서측(e-mart) 입구 B5층 B구역 주차 후 1층 5번/6번 gate 출구 앞 셔틀버스 탑승 (셔틀버스 3분 거리)</p>
-    </div>
-    <div class="info-card">
-      <p class="info-card__title">TRANSPORT</p>
-      <p><b>지하철 이용 시 (셔틀버스 대기)</b></p>
-      <p>① 지하철 수서역 4번출구 직진, 투썸플레이스(수서타워) 끼고 좌회전, 맞은편 노란색 셔틀버스 탑승</p>
-      <p>② SRT수서역 1번출구 도보 30m 직진 후 우회전, 기아서비스 맞은편 노란색 셔틀버스 탑승</p>
-      <p>* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
-      <p style="margin-top:8px;"><b>버스 이용 시</b><br>강남한양수자인 APT정류장 하차, 도보 10분 내외 (지선 3426 · 간선 402)</p>
-    </div>
-    <div class="info-card">
-      <p class="info-card__title">BUSAN CHARTER BUS</p>
-      <p><b>부산 대절버스 안내</b></p>
-      <p>동래역 3번 출구 · 오전 7시 30분 출발</p>
-      <p>차량번호 : 부산 70바 7141</p>
-    </div>
-    <div class="info-card">
-      <p class="info-card__title">NOTICE</p>
-      <p><b>Flower Policy</b><br>축하 화환은 정중히 사양합니다.<br>소중한 걸음과 따뜻한 축복만으로도 충분히 감사합니다.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       6. OUR MOMENTS (갤러리)
-       🔧 gallery1.jpg ~ gallery5.jpg 를 실제 사진으로 교체하세요.
-  ============================================================= -->
-  <section class="gallery reveal">
-    <p class="divider-label">OUR MOMENTS</p>
-    <p class="script-headline">Together Always</p>
-
-    <!-- 사진 14장이 하트 모양으로 배치됩니다. 사진을 누르면 커지면서 뒤가 흐려지고, 옆으로 넘겨 볼 수 있어요. -->
-    <div class="heart" id="heart" role="group" aria-label="사진 14장. 누르면 크게 볼 수 있어요"></div>
-    <p class="gallery__count">사진을 눌러 보세요</p>
-  </section>
 
   <!-- 갤러리 확대 라이트박스 -->
   <div class="lightbox" id="lightbox">
@@ -1237,7 +1213,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
     <button class="lightbox__arrow lightbox__arrow--prev" id="lightboxPrev" aria-label="이전 사진">&#10094;</button>
     <button class="lightbox__arrow lightbox__arrow--next" id="lightboxNext" aria-label="다음 사진">&#10095;</button>
     <div class="lightbox__track" id="lightboxTrack"></div>
-    <p class="lightbox__count" id="lightboxCount">1 / 14</p>
+    <p class="lightbox__count" id="lightboxCount">1 / 15</p>
   </div>
 
   <!-- ============================================================
@@ -1378,15 +1354,16 @@ setInterval(updateCountdown, 1000);
    🔧 사진은 index.html 과 같은 폴더에 gallery1.jpg ~ gallery19.jpg 로 넣으세요.
       파일 이름 규칙이 다르면 photoName() 한 줄만 고치면 됩니다.
 ============================================================= */
-const GALLERY_COUNT = 14;   // 🔧 사진 장수 (14장 / 19장 하트 모양이 준비돼 있어요)
+const GALLERY_COUNT = 15;   // 🔧 사진 장수 (14 / 15 / 19장 하트 모양이 준비돼 있어요)
 const photoName = (i) => `gallery${i}.jpg`;
 
 // 하트 배치: 줄마다 [가로 위치들] (단위: 사진 한 칸)
 const HEART_LAYOUTS = {
   14: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-1,0,1], [0]],                      // 4+6+3+1
-  19: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-2,-1,0,1,2], [-1,0,1], [0]]       // 4+6+5+3+1
+  15: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-1.5,-0.5,0.5,1.5], [0]],           // 4+6+4+1
+  19: [[-2,-1,1,2], [-2.5,-1.5,-0.5,0.5,1.5,2.5], [-2,-1,0,1,2], [-1,0,1], [0]]        // 4+6+5+3+1
 };
-const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[14];
+const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[15];
 const heartEl = document.getElementById('heart');
 const lightbox = document.getElementById('lightbox');
 const lightboxTrack = document.getElementById('lightboxTrack');
@@ -1398,7 +1375,7 @@ let lightboxIndex = 0, lastTile = null;
 const tiles = [];
 
 (function buildHeart(){
-  const PITCH = 15.6, ROWH = 14.6, TILE = 16.4;           // 가로 폭(%) 기준
+  const PITCH = 16.6, ROWH = 16.4, TILE = 14.6;      // 사진이 겹치지 않게: 간격(PITCH, ROWH) > 사진 크기(TILE)           // 가로 폭(%) 기준
   const H = (HEART_ROWS.length - 1) * ROWH + TILE + 2;      // 하트 전체 높이(%)
   heartEl.style.aspectRatio = `100 / ${H}`;
   let n = 0;
@@ -1412,7 +1389,7 @@ const tiles = [];
       t.style.left = (50 + x * PITCH) + '%';
       t.style.top = ((r * ROWH + TILE/2 + 1) / H * 100) + '%';
       t.style.setProperty('--i', n);
-      t.style.setProperty('--r', ((n * 37) % 7 - 3) + 'deg');   // 살짝씩 기울어진 느낌
+      t.style.setProperty('--r', ((n * 37) % 5 - 2) + 'deg');   // 살짝씩 기울어진 느낌
       const inner = document.createElement('span'); inner.className = 'tile__in';
       const img = new Image(); img.alt = `갤러리 사진 ${i}`; img.decoding = 'async'; img.loading = 'lazy';
       img.onerror = () => { t.classList.add('is-blank'); img.remove(); };
@@ -1487,22 +1464,6 @@ lightboxTrack.addEventListener('touchend', () => {
   if(lbD > th) goLightbox(-1); else if(lbD < -th) goLightbox(1); else updateLightboxPosition(true);
   lbD = 0;
 });
-
-/* toast-couple 이미지: png → jpg → jpeg 순서로 찾아서 있으면 보여줍니다 */
-(function(){
-  const img = document.getElementById('toastImg'), ph = document.getElementById('toastPh');
-  const names = ['toast-couple.png','toast-couple.jpg','toast-couple.jpeg'];
-  (function tryNext(i){
-    if(i >= names.length) return;
-    const t = new Image();
-    t.onload = () => {
-      img.src = names[i]; img.hidden = false; ph.style.display = 'none';
-      if(!/\.png$/.test(names[i])) img.classList.add('is-rect');   // 배경이 있는 사진이면 액자처럼
-    };
-    t.onerror = () => tryNext(i + 1);
-    t.src = names[i];
-  })(0);
-})();
 
 /* ============================================================
    편지봉투 열기 (모시는 글)
