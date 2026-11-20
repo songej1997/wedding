@@ -838,7 +838,7 @@ section{ padding: 64px 28px; position:relative; }
 .lt-sign .sep{ margin:0 12px; color:var(--gold); }
 
 .env-hint{
-  display:block; margin:18px auto 0; padding:10px 14px; border:0; background:none; cursor:pointer;
+  display:block; margin:-14px auto -22px; padding:10px 14px; border:0; background:none; cursor:pointer;
   font-family:var(--font-serif); font-size:15px; letter-spacing:.08em; color:var(--on-wine); opacity:.8; transition:opacity .5s;
 }
 
@@ -937,6 +937,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
   ============================================================= -->
   <section class="invite-wine reveal">
     <p class="headline-serif">모시는 글</p>
+    <button type="button" class="env-hint" id="tapHint" aria-controls="letterCard">카드를 눌러보세요!</button>
 
     <!-- 편지봉투: 도장을 누르면 열리고, 안에 모시는 글이 펼쳐집니다.
          주소 뒤에 ?to=이름 을 붙이면 편지 맨 위에 그 이름이 적혀요. 이름이 없으면 "you're invited" 만 나옵니다. -->
@@ -981,7 +982,6 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
         </button>
       </div>
     </div>
-    <button type="button" class="env-hint" id="tapHint" aria-controls="letterCard">카드를 눌러보세요!</button>
 
 <!-- 전화 연락 기능 : 마음 전하실 곳 바로 위에 오도록 이 섹션 맨 아래로 이동 -->
     <!-- 🔧 tel: 뒤 번호를 실제 전화번호로 교체하세요. -->
@@ -1292,7 +1292,7 @@ const photoName = (i) => `gallery${i}.jpg`;
 // 하트 배치: 줄마다 [가로 위치들] (단위: 사진 한 칸)
 const HEART_LAYOUTS = {
   14: [[-2,-1,1,2], [-2,-1,0,1,2], [-1,0,1], [-0.5,0.5]],                           // 4+5+3+2
-  15: [[-2,-1,1,2], [-2,-1,0,1,2], [-1.5,-0.5,0.5,1.5], [-0.5,0.5]]                  // 4+5+4+2
+  15: [[-2,-1,1,2], [-2,-1,0,1,2], [-1,0,1], [-0.5,0.5], [0]]                         // 4+5+3+2+1 (뾰족한 하트)
 };
 const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[15];
 const heartEl = document.getElementById('heart');
@@ -1306,7 +1306,8 @@ let lightboxIndex = 0, lastTile = null;
 const tiles = [];
 
 (function buildHeart(){
-  const PITCH = 18.4, ROWH = 24, TILE_H = 27.3;       // 폴라로이드가 살짝만 겹치는 촘촘한 하트 (가로 폭 % 기준)
+  const PITCH = 18.4, ROWH = 22.5, TILE_H = 27.3;
+  const DROP = { 0: 6, 3: 6 };                         // 맨 위 줄 양 끝(1·4번째)을 살짝 내려 하트 윗선을 둥글게       // 폴라로이드가 살짝만 겹치는 촘촘한 하트 (가로 폭 % 기준)
   const H = (HEART_ROWS.length - 1) * ROWH + TILE_H + 2;      // 하트 전체 높이(%)
   heartEl.style.aspectRatio = `100 / ${H}`;
   let n = 0;
@@ -1318,7 +1319,7 @@ const tiles = [];
       t.type = 'button'; t.className = 'tile';
       t.setAttribute('aria-label', `사진 ${i} 크게 보기`);
       t.style.left = (50 + x * PITCH) + '%';
-      t.style.top = ((r * ROWH + TILE_H/2 + 1) / H * 100) + '%';
+      t.style.top = ((r * ROWH + (DROP[n] || 0) + TILE_H/2 + 1) / H * 100) + '%';
       t.style.zIndex = (n % 2) ? 2 : 1;
       t.style.setProperty('--i', n);
       t.style.setProperty('--r', ((n * 37) % 9 - 4) + 'deg');   // 살짝씩 기울어진 느낌
