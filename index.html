@@ -251,7 +251,7 @@ section{ padding: 64px 28px; position:relative; }
 .medallion-wrap img{ width:100%; display:block; }
 
 /* 디데이 카운트다운 (커버, 크림 배경 위) */
-.dday{ margin-top: 30px; text-align:center; }
+.dday{ margin-top: 20px; margin-bottom: 26px; text-align:center; }
 .dday__labels{
   display:grid; grid-template-columns: repeat(4,1fr);
   max-width: 240px; margin: 0 auto;
@@ -543,11 +543,11 @@ section{ padding: 64px 28px; position:relative; }
   margin-bottom: 8px;
 }
 .info-card p{ font-size: 13px; color: var(--ink-soft); line-height:1.8; }
-.guide-card{ padding:22px 18px; }
-.guide__row{ display:grid; grid-template-columns:76px 1fr; gap:10px; padding:12px 0; align-items:start; }
+.guide-card{ padding:22px 16px; }
+.guide__row{ display:grid; grid-template-columns:64px 1fr; gap:8px; padding:12px 0; align-items:start; }
 .guide__row + .guide__row{ border-top:1px solid rgba(60,46,39,.1); }
 .guide dt{ font-family:var(--font-serif); font-weight:700; font-size:14px; color:var(--ink); line-height:1.5; }
-.guide dd{ font-family:var(--font-serif); font-size:13px; color:var(--ink); line-height:1.85; }
+.guide dd{ font-family:var(--font-serif); font-size:12.5px; word-break:keep-all; color:var(--ink); line-height:1.85; }
 .guide__note{ margin-top:10px; padding-top:12px; border-top:1px solid rgba(60,46,39,.1); font-size:11.5px !important; }
 
 /* ============================================================
@@ -716,7 +716,7 @@ section{ padding: 64px 28px; position:relative; }
 
 .footer{ text-align:center; padding: 32px 28px 50px; }
 .footer__copyright{ font-size: 10px; color: var(--ink-soft); }
-.footer__credit{ margin-top: 6px; font-size: 9.5px; letter-spacing: 0.06em; color: var(--ink-soft); opacity:0.7; }
+.footer__credit{ margin-top: 6px; font-size: 11.5px; letter-spacing: 0.06em; color: var(--ink-soft); opacity:0.7; }
 
 
 /* ============================================================
@@ -827,13 +827,13 @@ section{ padding: 64px 28px; position:relative; }
 .letter-paper > *{ opacity:0; transition:opacity .9s .5s var(--soft); }
 .stage[data-state="unfold"] .letter-paper > *, .stage[data-state="open"] .letter-paper > *{ opacity:1; }
 
-.lt-name{ font-family:var(--font-en),var(--font-serif); letter-spacing:.06em; font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
+.lt-name{ font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:1.4; color:var(--wine); max-width:100%; overflow-wrap:anywhere; margin-bottom:2px; }
 .lt-invited{ font-family:var(--font-script); font-size:52px; line-height:1; color:var(--wine); white-space:nowrap; }
 .lt-heart{ width:15px; height:15px; color:var(--gold); margin-top:8px; }
-.lt-body{ margin-top:20px; font-family:var(--font-en),var(--font-serif); font-size:14px; line-height:2; letter-spacing:.06em; color:var(--ink); }
+.lt-body{ margin-top:20px; font-family:var(--font-serif); font-size:14px; line-height:1.95; color:var(--ink); }
 .lt-body div{ white-space:nowrap; }
 .lt-body .gap{ height:14px; }
-.lt-sign{ margin-top:24px; font-family:var(--font-en),var(--font-serif); letter-spacing:.06em; font-size:13.5px; color:var(--ink); }
+.lt-sign{ margin-top:24px; font-family:var(--font-serif); font-size:13.5px; color:var(--ink); }
 .lt-sign b{ font-weight:700; }
 .lt-sign .sep{ margin:0 12px; color:var(--gold); }
 
@@ -1083,13 +1083,13 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
       <div class="illust-placeholder" style="display:none;">directions-map.jpg</div>
     </div>
 
-    <!-- 주차 / 지하철 / KTX / 부산 대절버스 안내 -->
+    <!-- 주차 / 지하철 / KTX / 부산 전세버스 안내 -->
     <div class="info-card guide-card">
       <dl class="guide">
-        <div class="guide__row"><dt>주차</dt><dd>예식장 건너편 공영주차장<br>만차 시 가든파이브 주차장 이용 가능</dd></div>
+        <div class="guide__row"><dt>주차</dt><dd>예식장 건너편 공영주차장<br>만차 시 가든파이브 주차장 이용</dd></div>
         <div class="guide__row"><dt>지하철</dt><dd>수서역 4번 출구 직진 좌회전 후<br>맞은편 노란색 셔틀버스 탑승</dd></div>
         <div class="guide__row"><dt>KTX</dt><dd>수서역 1번 출구, 도보 30m 거리<br>기아서비스 맞은편 노란색 셔틀버스 탑승</dd></div>
-        <div class="guide__row"><dt>부산<br>대절버스</dt><dd>동래역 3번 출구 오전 7시 30분 출발<br>차량번호 : 부산 70바 7141</dd></div>
+        <div class="guide__row"><dt>부산<br>전세버스</dt><dd>동래역 3번 출구 오전 7시 30분<br>차량번호 : 부산 70바 7141</dd></div>
       </dl>
       <p class="guide__note">* 예식 1시간 전부터 10~15분 간격으로 셔틀 운행</p>
     </div>
@@ -1122,7 +1122,7 @@ button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
             <div class="wine-account-row">
               <div>
                 <p class="wine-account-row__name">아버지 최백림</p>
-                <p class="wine-account-row__num">신한은행 125-001-04-034411</p>
+                <p class="wine-account-row__num">국민은행 125-001-04-034411</p>
               </div>
               <button class="wine-account-row__copy" data-copy-target="125-001-04-034411" aria-label="계좌번호 복사">&#128203;</button>
             </div>
@@ -1292,7 +1292,7 @@ const photoName = (i) => `gallery${i}.jpg`;
 // 하트 배치: 줄마다 [가로 위치들] (단위: 사진 한 칸)
 const HEART_LAYOUTS = {
   14: [[-2,-1,1,2], [-2,-1,0,1,2], [-1,0,1], [-0.5,0.5]],                           // 4+5+3+2
-  15: [[-2,-1,1,2], [-2,-1,0,1,2], [-1,0,1], [-0.5,0.5], [0]]                         // 4+5+3+2+1 (뾰족한 하트)
+  15: [[-2,-1,1,2], [-2,-1,0,1,2], [-1.5,-0.5,0.5,1.5], [-0.5,0.5]]                  // 4+5+4+2
 };
 const HEART_ROWS = HEART_LAYOUTS[GALLERY_COUNT] || HEART_LAYOUTS[15];
 const heartEl = document.getElementById('heart');
@@ -1306,7 +1306,7 @@ let lightboxIndex = 0, lastTile = null;
 const tiles = [];
 
 (function buildHeart(){
-  const PITCH = 18.4, ROWH = 22.5, TILE_H = 27.3;
+  const PITCH = 18.4, ROWH = 24, TILE_H = 27.3;
   const DROP = { 0: 6, 3: 6 };                         // 맨 위 줄 양 끝(1·4번째)을 살짝 내려 하트 윗선을 둥글게       // 폴라로이드가 살짝만 겹치는 촘촘한 하트 (가로 폭 % 기준)
   const H = (HEART_ROWS.length - 1) * ROWH + TILE_H + 2;      // 하트 전체 높이(%)
   heartEl.style.aspectRatio = `100 / ${H}`;
